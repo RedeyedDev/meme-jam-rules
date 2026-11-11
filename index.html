@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meme Jam Rulebook</title>
+<meta name="description" content="How Meme Jam works: the meme basketball card game in Telegram. Shots, combos, defense, clutch, modes, collection, Free Throw, Season Pass and fair play.">
+<meta property="og:title" content="Meme Jam Rulebook">
+<meta property="og:description" content="Meme basketball card game in Telegram: how a match works, what cards do, and where the prizes come from.">
+<meta property="og:image" content="https://redeyeddev.github.io/meme-jam-rules/assets/logo.webp">
+<meta name="theme-color" content="#140a1f">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap">
+<style>
+  /* Display face = the game's: Lilita One for Latin, Nunito 800 for Cyrillic. */
+  @font-face { font-family: 'MJ Display'; font-weight: 800; font-display: swap; src: url('./assets/fonts/lilita-one-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'MJ Display'; font-weight: 800; font-display: swap; src: url('./assets/fonts/lilita-one-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'MJ Display'; font-weight: 800; font-display: swap; src: url('./assets/fonts/nunito-800-cyrillic.woff2') format('woff2');
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+  @font-face { font-family: 'MJ Display'; font-weight: 800; font-display: swap; src: url('./assets/fonts/nunito-800-cyrillic-ext.woff2') format('woff2');
+    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+  :root {
+    --bg: #140a1f; --bg2: #1e1030; --surface: #27173d; --surface2: #32204b; --line: #4a3566;
+    --text: #fff6ee; --muted: #b9a8cc; --faint: #8a78a3;
+    --action: #2ee6d6; --action-shadow: #157a70; --panel-shadow: 0 20px 40px rgba(0,0,0,.35);
+    --court: #1b3a34; --court-line: rgba(255,246,238,.22);
+    --orange: #ff7a1a; --orange-shadow: #b34e00; --teal: #2ee6d6; --teal-shadow: #157a70;
+    --yellow: #ffd23f; --yellow-shadow: #b8940f; --red: #ff2d6b; --red-shadow: #a3153f;
+    --green: #3ddc84; --purple: #7b2cff; --pink: #ff5fb0; --ink: #140a1f; --cream: #fff6ee;
+    --frogs: #3ddc84; --dogs: #ffc233; --wojaks: #8fb3ff; --cats: #ff6fb5;
+    --common: #a4a8b3; --rare: #3b82f6; --epic: #a855f7; --legendary: #f5c542;
+    --hot: linear-gradient(135deg, #ff9a1f 0%, #ff3d5a 45%, #8a2be2 100%);
+    --ring: conic-gradient(from 0deg,#ff3d5a,#ffd23f,#3ddc84,#2ee6d6,#7b2cff,#ff3d5a);
+    --display: 'MJ Display', 'Lilita One', 'Nunito', sans-serif;
+    --body: 'Nunito', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --spring: cubic-bezier(.34, 1.56, .64, 1); --out: cubic-bezier(.2, .8, .2, 1);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme='dark']) {
+      --bg: #fff6ef; --bg2: #fdece0; --surface: #ffffff; --surface2: #e2fbf8; --line: #ead9cc;
+      --text: #1d0f2c; --muted: #6b5a80; --faint: #7a6a90;
+      --action: #0e9e91; --action-shadow: #0a6f66; --panel-shadow: 0 6px 20px rgba(29,15,44,.08);
+      --court: #1f6f63; --court-line: rgba(255,246,238,.35);
+    }
+  }
+  :root[data-theme='light'] {
+    --bg: #fff6ef; --bg2: #fdece0; --surface: #ffffff; --surface2: #e2fbf8; --line: #ead9cc;
+    --text: #1d0f2c; --muted: #6b5a80; --faint: #7a6a90;
+    --action: #0e9e91; --action-shadow: #0a6f66; --panel-shadow: 0 6px 20px rgba(29,15,44,.08);
+    --court: #1f6f63; --court-line: rgba(255,246,238,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 700 15px/1.55 var(--body); overflow-x: hidden; }
+  a { color: var(--action); }
+  button { font: inherit; color: inherit; }
+  img { max-width: 100%; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+  .disp { font-family: var(--display); font-weight: 800; letter-spacing: .5px; }
+  .muted { color: var(--muted); }
+  b, strong { font-weight: 800; }
+
+  /* ── card (mirrors the in-game Card: family gradient, rarity frame, white edge, chip, rank) ── */
+  :root { --w: 104px; }
+  .card { --fc: var(--frogs); --rc: var(--common); position: relative; flex: none; width: var(--w); aspect-ratio: 5 / 7; font-size: calc(var(--w) / 10);
+    border-radius: 1.15em; border: .3em solid var(--rc); overflow: hidden; user-select: none;
+    background: radial-gradient(circle at 50% 30%, var(--fc) 0%, var(--fc) 45%, #27173d 120%);
+    transition: transform .18s var(--out), box-shadow .18s var(--out), opacity .18s, filter .18s; }
+  .card.frogs { --fc: var(--frogs); } .card.dogs { --fc: var(--dogs); } .card.wojaks { --fc: var(--wojaks); } .card.cats { --fc: var(--cats); }
+  .card.rare { --rc: var(--rare); } .card.epic { --rc: var(--epic); } .card.legendary { --rc: var(--legendary); }
+  .card.legendary::before { content: ''; position: absolute; inset: 0; background: repeating-conic-gradient(rgba(255,246,238,.16) 0 9deg, transparent 9deg 30deg); }
+  .card.wild, .card.holo { border-color: transparent; background-origin: border-box; background-clip: padding-box, border-box; }
+  .card.wild { background-image: var(--hot), var(--ring); }
+  .card.holo { background-image: radial-gradient(circle at 50% 30%, var(--fc) 0%, var(--fc) 45%, #27173d 120%), var(--ring); }
+  .card.gold { border-color: var(--yellow); box-shadow: inset 0 0 0 1px var(--yellow-shadow); }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; pointer-events: none; }
+  .card::after { content: ''; position: absolute; inset: 0; border: .19em solid #fff; border-radius: .85em; pointer-events: none; }
+  .card .chip { position: absolute; top: .55em; left: .55em; width: 2.1em; height: 2.1em; border-radius: .65em; background: var(--fc); color: var(--ink); display: grid; place-items: center; font: 800 1.15em/1 var(--body); font-style: normal; box-shadow: 0 0 0 .12em rgba(20,10,31,.25); }
+  .card .chip { font-size: 1.15em; width: 1.85em; height: 1.85em; border-radius: .55em; top: .5em; left: .5em; }
+  .card .rank { position: absolute; right: .25em; bottom: .05em; font: 800 2.9em/1 var(--display); color: #fff; text-shadow: 0 0 .4em var(--rc), 0 .06em 0 rgba(20,10,31,.5); }
+  .card .opp { position: absolute; top: .55em; right: .55em; width: 1.1em; height: 1.1em; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 .2em rgba(255,255,255,.9); }
+  .card.back { border-color: #fff; background: var(--hot); }
+  .card.back img { object-fit: cover; }
+
+  /* ── hero ── */
+  .hero { position: relative; background: var(--hot); color: var(--cream); overflow: hidden; padding: calc(14px + env(safe-area-inset-top)) 0 96px; }
+  .hero svg.lines { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .16; pointer-events: none; }
+  .hero .wrap { position: relative; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--cream); }
+  .brand img { height: 46px; width: auto; filter: drop-shadow(0 4px 0 rgba(20,10,31,.35)); }
+  .brand span { font: 800 12px/1 var(--display); letter-spacing: 1.5px; opacity: .9; }
+  .lang { display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: rgba(20,10,31,.32); }
+  .lang button { background: none; border: 0; border-radius: 9px; padding: 6px 10px; cursor: pointer; font: 800 12px/1 var(--display); letter-spacing: 1px; color: rgba(255,246,238,.75); }
+  .lang button[aria-pressed="true"] { background: var(--cream); color: var(--ink); }
+  .hero-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px; margin-top: 34px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 10px; background: rgba(20,10,31,.32); font: 800 11px/1 var(--display); letter-spacing: 1.5px; text-transform: uppercase; }
+  .eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 3px rgba(46,230,214,.3); }
+  h1 { margin: 14px 0 12px; font: 800 clamp(40px, 8.4vw, 76px)/.95 var(--display); letter-spacing: 1px; text-transform: uppercase; text-shadow: 0 6px 0 rgba(20,10,31,.35); }
+  h1 em { font-style: normal; color: var(--yellow); }
+  .hero p.lead { margin: 0; max-width: 520px; font-size: 16px; line-height: 1.5; color: rgba(255,246,238,.94); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 56px; padding: 0 26px; border: 1.5px solid var(--yellow-shadow); border-radius: 18px; background: var(--yellow); color: var(--ink); cursor: pointer; text-decoration: none;
+    font: 800 19px/1 var(--display); letter-spacing: 1.2px; text-transform: uppercase; box-shadow: 0 6px 0 var(--yellow-shadow); transition: transform .12s var(--out), box-shadow .12s var(--out); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--yellow-shadow); }
+  .btn.ghost { background: rgba(20,10,31,.32); color: var(--cream); border: 3px solid var(--cream); box-shadow: none; }
+  .btn.orange { background: var(--orange); border-color: var(--orange-shadow); box-shadow: 0 6px 0 var(--orange-shadow); }
+  .btn.orange:active { box-shadow: 0 1px 0 var(--orange-shadow); }
+  .btn.teal { background: var(--teal); border-color: var(--teal-shadow); box-shadow: 0 6px 0 var(--teal-shadow); }
+  .btn.teal:active { box-shadow: 0 1px 0 var(--teal-shadow); }
+  .btn.sm { height: 44px; padding: 0 18px; font-size: 15px; border-radius: 14px; box-shadow: 0 4px 0 var(--yellow-shadow); }
+  .btn.plain, .btn.plain:active { background: none; color: var(--text); border: 2px solid var(--line); box-shadow: none; }
+  .btn:disabled { opacity: .45; cursor: default; transform: none; }
+
+  .fan { position: relative; width: 380px; height: 300px; flex: none; }
+  .fan .card { --w: 150px; position: absolute; left: 50%; bottom: 14px; margin-left: -75px; transform-origin: 50% 100%; box-shadow: 0 12px 0 rgba(20,10,31,.28); animation: fanIn .9s var(--spring) both; transform: translate(var(--x), var(--y)) rotate(var(--rot)); }
+  .fan .card:nth-child(1) { --x: -112px; --y: 16px; --rot: -18deg; animation-delay: .05s; } .fan .card:nth-child(2) { --x: -58px; --y: 2px; --rot: -9deg; animation-delay: .12s; z-index: 1; }
+  .fan .card:nth-child(3) { --x: 0px; --y: -6px; --rot: 0deg; animation-delay: .19s; z-index: 2; } .fan .card:nth-child(4) { --x: 58px; --y: 2px; --rot: 9deg; animation-delay: .26s; z-index: 1; }
+  .fan .card:nth-child(5) { --x: 112px; --y: 16px; --rot: 18deg; animation-delay: .33s; }
+  .fan .card:hover { transform: translate(var(--x), calc(var(--y) - 18px)) rotate(var(--rot)); z-index: 3; }
+  @keyframes fanIn { from { transform: translateY(60px) scale(.6); opacity: 0; } }
+  .ballfx { position: absolute; right: -8px; top: -6px; width: 74px; height: 74px; animation: bob 4s ease-in-out infinite; filter: drop-shadow(0 8px 0 rgba(20,10,31,.3)); z-index: 4; }
+  @keyframes bob { 50% { transform: translateY(-12px) rotate(18deg); } }
+
+  /* ── stat strip + nav ── */
+  .strip { position: relative; margin-top: -58px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .stat { background: var(--surface); border: 2px solid var(--line); border-radius: 20px; padding: 14px 16px; box-shadow: var(--panel-shadow); min-width: 0; }
+  .stat b { display: block; font: 800 34px/1 var(--display); letter-spacing: .5px; background: var(--hot); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat span { display: block; margin-top: 5px; font: 800 11px/1.25 var(--display); letter-spacing: 1.1px; text-transform: uppercase; color: var(--muted); }
+  nav.toc { position: sticky; top: 0; z-index: 20; margin-top: 18px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  nav.toc .wrap { display: flex; gap: 6px; overflow-x: auto; padding-top: 10px; padding-bottom: 10px; scrollbar-width: none; }
+  nav.toc .wrap::-webkit-scrollbar { display: none; }
+  nav.toc a { flex: none; padding: 8px 12px; border-radius: 12px; text-decoration: none; background: var(--surface); border: 1px solid var(--line); color: var(--muted); font: 800 12px/1 var(--display); letter-spacing: 1.1px; text-transform: uppercase; transition: background .15s, color .15s; }
+  nav.toc a:hover, nav.toc a.on { background: var(--action); color: var(--ink); border-color: var(--action-shadow); }
+
+  /* ── sections ── */
+  section { padding-top: 54px; }
+  .kicker { display: inline-block; padding: 5px 10px; border-radius: 10px; background: var(--hot); color: var(--cream); font: 800 11px/1 var(--display); letter-spacing: 1.5px; text-transform: uppercase; }
+  h2 { margin: 12px 0 8px; font: 800 clamp(28px, 5.4vw, 44px)/1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
+  .sub { margin: 0 0 20px; max-width: 680px; color: var(--muted); font-size: 15.5px; }
+  h3 { margin: 0 0 6px; font: 800 17px/1.15 var(--display); letter-spacing: .8px; text-transform: uppercase; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px; box-shadow: var(--panel-shadow); min-width: 0; }
+  .panel p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .panel p + p { margin-top: 8px; }
+  .panel p b { color: var(--text); }
+  .grid { display: grid; gap: 12px; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .rise { opacity: 0; transform: translateY(18px); transition: opacity .55s var(--out), transform .55s var(--out); }
+  .rise.in { opacity: 1; transform: none; }
+  .tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--line); color: var(--muted); font: 800 10.5px/1.1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
+  .tag.t { background: color-mix(in srgb, var(--teal) 18%, transparent); color: var(--action); border-color: color-mix(in srgb, var(--action) 45%, transparent); }
+  .tag.y { background: color-mix(in srgb, var(--yellow) 22%, transparent); color: color-mix(in srgb, var(--yellow) 70%, var(--text)); border-color: color-mix(in srgb, var(--yellow) 55%, transparent); }
+  .tag.r { background: color-mix(in srgb, var(--red) 16%, transparent); color: color-mix(in srgb, var(--red) 80%, var(--text)); border-color: color-mix(in srgb, var(--red) 45%, transparent); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+
+  /* ── steps ── */
+  .step { position: relative; overflow: hidden; padding-top: 16px; }
+  .step .n { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font: 800 26px/1 var(--display); color: var(--ink); background: var(--c); box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 55%, #000); transform: rotate(-6deg); margin-bottom: 14px; }
+  .step::after { content: attr(data-n); position: absolute; right: -6px; bottom: -34px; font: 800 130px/1 var(--display); color: var(--text); opacity: .05; pointer-events: none; }
+
+  /* ── demo court ── */
+  .demo { border-width: 2px; padding: 0; overflow: hidden; }
+  .demo-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; background: var(--ink); color: var(--cream); }
+  .demo-top .sc { display: flex; align-items: baseline; gap: 8px; font: 800 15px/1 var(--display); letter-spacing: 1.2px; text-transform: uppercase; }
+  .demo-top .sc b { font-size: 34px; color: var(--yellow); min-width: 44px; display: inline-block; }
+  .demo-top .q { display: flex; gap: 5px; align-items: center; font: 800 12px/1 var(--display); letter-spacing: 1.2px; }
+  .demo-top .q i { width: 26px; height: 8px; border-radius: 4px; background: rgba(255,246,238,.2); overflow: hidden; }
+  .demo-top .q i s { display: block; height: 100%; background: var(--teal); transition: width .3s; }
+  .courtbox { position: relative; background: var(--court); padding: 30px 12px 16px; }
+  .courtbox svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .lanes { position: relative; display: grid; grid-template-columns: repeat(5, auto); justify-content: center; gap: clamp(4px, 1.5vw, 18px); }
+  .lane { --w: clamp(46px, 15.6vw, 112px); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .lane .pos { font: 800 12px/1 var(--display); letter-spacing: 1.5px; color: rgba(255,246,238,.75); }
+  .stack { position: relative; width: var(--w); height: calc(var(--w) * 1.4 + var(--w) * .36); }
+  .stack .card { position: absolute; left: 0; bottom: 0; }
+  .stack .card.p1 { bottom: calc(var(--w) * .18); transform: scale(.94); filter: brightness(.72); z-index: 1; }
+  .stack .card.p2 { bottom: calc(var(--w) * .36); transform: scale(.88); filter: brightness(.5); z-index: 0; }
+  .stack .card.top { z-index: 2; cursor: pointer; box-shadow: 0 6px 0 rgba(0,0,0,.3); }
+  .stack .card.top:hover { transform: translateY(-4px); }
+  .stack .card.sel { transform: translateY(-12px) !important; box-shadow: 0 0 0 3px var(--teal), 0 14px 0 rgba(0,0,0,.3); }
+  .stack .card.ok { box-shadow: 0 0 0 3px rgba(46,230,214,.6), 0 6px 0 rgba(0,0,0,.3); animation: pulse 1.2s ease-in-out infinite; }
+  .stack .card.no { opacity: .45; filter: saturate(.2); }
+  .stack .card.in { animation: deal .4s var(--spring) both; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 5px rgba(46,230,214,.25), 0 6px 0 rgba(0,0,0,.3); } }
+  @keyframes deal { from { transform: translateY(-30px) scale(.7); opacity: 0; } }
+  .stack .empty { position: absolute; left: 0; bottom: 0; width: var(--w); aspect-ratio: 5/7; border: 2px dashed var(--court-line); border-radius: 12px; }
+  .lane .left { font: 800 11px/1 var(--display); letter-spacing: 1px; color: rgba(255,246,238,.55); }
+  .demo-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--line); }
+  .shot b { display: block; font: 800 24px/1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
+  .shot span { display: block; margin-top: 4px; font-size: 13px; color: var(--muted); line-height: 1.35; }
+  .outcome { padding: 0 16px 16px; }
+  .outcome:empty { display: none; }
+  .duels { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .pair { display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); animation: riseIn .35s var(--out) both; }
+  .pair .card { --w: 44px; } .pair .card .rank { font-size: 3.4em; }
+  .pair .vs { font: 800 12px/1 var(--display); color: var(--faint); }
+  .def { width: 44px; height: 62px; border-radius: 8px; border: 2.5px solid var(--red); background: var(--surface); display: grid; place-items: center; align-content: center; gap: 3px; font: 800 10px/1 var(--display); color: var(--red); }
+  .def i { width: 18px; height: 18px; border-radius: 5px; background: var(--fc); color: var(--ink); display: grid; place-items: center; font: 800 10px/1 var(--body); font-style: normal; }
+  .def.ref { border-color: var(--yellow); color: var(--yellow); }
+  .pair .res { padding: 4px 7px; border-radius: 8px; font: 800 10.5px/1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
+  .pair .res.open { background: var(--teal); color: var(--ink); } .pair .res.blk { background: var(--red); color: var(--cream); } .pair .res.cl { background: var(--yellow); color: var(--ink); }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(10px); } }
+  .stamp { display: inline-block; margin-top: 12px; padding: 10px 16px; border-radius: 14px; font: 800 24px/1 var(--display); letter-spacing: 1.5px; text-transform: uppercase; transform: rotate(-3deg); animation: stamp .45s var(--spring) both; animation-delay: .35s; }
+  .stamp.good { background: var(--teal); color: var(--ink); box-shadow: 0 5px 0 var(--teal-shadow); }
+  .stamp.bad { background: var(--red); color: var(--cream); box-shadow: 0 5px 0 var(--red-shadow); }
+  .stamp.clutch { background: var(--yellow); color: var(--ink); box-shadow: 0 5px 0 var(--yellow-shadow), 0 0 26px rgba(255,210,63,.55); }
+  @keyframes stamp { from { transform: rotate(-20deg) scale(2); opacity: 0; } }
+  .outcome .why { margin: 10px 0 0; font-size: 13.5px; color: var(--muted); }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 11px; height: 11px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 2px rgba(255,255,255,.9); }
+  .legend i.sq { border-radius: 3px; background: var(--teal); box-shadow: none; }
+
+  /* ── combo tiles, bars ── */
+  .combo { text-align: center; padding: 16px 12px; }
+  .combo .mini { display: flex; justify-content: center; height: 64px; margin-bottom: 10px; }
+  .combo .mini .card { --w: 42px; margin: 0 -7px; box-shadow: 0 4px 0 rgba(0,0,0,.25); }
+  .combo .mini .card:nth-child(odd) { transform: rotate(-6deg); } .combo .mini .card:nth-child(even) { transform: rotate(6deg) translateY(-3px); }
+  .combo .mini .card .rank { font-size: 3.4em; }
+  .combo .pts { font: 800 44px/1 var(--display); background: var(--hot); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .combo .nm { font: 800 15px/1 var(--display); letter-spacing: 1.2px; text-transform: uppercase; }
+  .combo small { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+  .bars { display: grid; gap: 10px; margin-top: 12px; }
+  .barrow { display: grid; grid-template-columns: 96px minmax(0, 1fr) 46px; align-items: center; gap: 10px; font: 800 12px/1.1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
+  .barrow .track { height: 14px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); overflow: hidden; }
+  .barrow .track i { display: block; height: 100%; width: 0; border-radius: 7px; background: var(--c); transition: width 1s var(--out) .15s; }
+  .in .barrow .track i { width: var(--v); }
+  .barrow em { font-style: normal; text-align: right; font-size: 15px; }
+  .barrow small { display: block; font: 700 10.5px/1.2 var(--body); letter-spacing: 0; text-transform: none; color: var(--faint); }
+
+  /* ── families ── */
+  .fam { position: relative; overflow: hidden; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; border-top: 5px solid var(--c); }
+  .fam .card { --w: 96px; transform: rotate(-4deg); box-shadow: 0 6px 0 rgba(0,0,0,.22); }
+  .fam h3 { color: var(--c); font-size: 22px; }
+  :root[data-theme='light'] .fam h3 { filter: brightness(.72); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme='dark']) .fam h3 { filter: brightness(.72); } }
+  .ranks { display: grid; grid-template-columns: 3fr 2fr 2fr 2fr; gap: 8px; margin-top: 12px; }
+  .rk { border-radius: 16px; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-bottom: 5px solid var(--c); text-align: center; min-width: 0; }
+  .rk .rs { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+  .rk .rs b { min-width: 34px; height: 40px; padding: 0 6px; border-radius: 10px; background: var(--c); color: var(--ink); display: grid; place-items: center; font: 800 22px/1 var(--display); }
+  .rk span { display: block; margin-top: 8px; font: 800 12px/1 var(--display); letter-spacing: 1.2px; text-transform: uppercase; }
+  .rk small { display: block; margin-top: 3px; font-size: 11.5px; color: var(--muted); }
+  .wildrow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: center; margin-top: 12px; background: var(--hot); color: var(--cream); border: 0; }
+  .wildrow .cs { display: flex; } .wildrow .card { --w: 92px; box-shadow: 0 6px 0 rgba(20,10,31,.3); } .wildrow .card + .card { margin-left: -34px; transform: rotate(9deg) translateY(4px); }
+  .wildrow p { color: rgba(255,246,238,.94); } .wildrow p b { color: var(--yellow); }
+
+  /* ── modes ── */
+  .mode { display: flex; flex-direction: column; border-top: 5px solid var(--c); }
+  .mode .ic { width: 50px; height: 50px; border-radius: 15px; background: var(--c); color: var(--ink); display: grid; place-items: center; font-size: 26px; box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 55%, #000); margin-bottom: 12px; transform: rotate(-5deg); }
+  .mode h3 small { display: block; margin-top: 3px; font: 800 11px/1 var(--display); letter-spacing: 1.2px; color: var(--faint); }
+  .mode .tags { margin-top: auto; padding-top: 12px; }
+  .teams { display: flex; gap: 0; margin-top: 12px; }
+  .teams img { width: 46px; height: 46px; border-radius: 50%; margin-right: -8px; box-shadow: 0 0 0 2px var(--surface); }
+
+  /* ── collection ── */
+  .skins { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .skin { text-align: center; }
+  .skin .card { --w: 124px; box-shadow: 0 8px 0 rgba(0,0,0,.22); }
+  .skin b { display: block; margin-top: 12px; font: 800 15px/1 var(--display); letter-spacing: 1.2px; text-transform: uppercase; }
+  .skin small { color: var(--muted); font-size: 12.5px; }
+  .lv { display: flex; gap: 6px; margin-top: 12px; }
+  .lv i { flex: 1; height: 34px; border-radius: 9px; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; font: 800 12px/1 var(--display); font-style: normal; color: var(--faint); }
+  .lv i.on { background: var(--teal); color: var(--ink); border-color: var(--teal-shadow); }
+  .packs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .pack { text-align: center; padding: 14px 12px 16px; }
+  .pack img { width: 100%; max-width: 150px; aspect-ratio: 5/7; object-fit: cover; border-radius: 14px; border: 3px solid var(--c); box-shadow: 0 8px 0 color-mix(in srgb, var(--c) 45%, #000); transition: transform .25s var(--spring); }
+  .pack:hover img { transform: translateY(-6px) rotate(-3deg); }
+  .pack h3 { margin-top: 16px; color: var(--c); }
+  :root[data-theme='light'] .pack h3 { filter: brightness(.7); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme='dark']) .pack h3 { filter: brightness(.7); } }
+
+  /* ── free throw ── */
+  .ft { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 12px; }
+  .hoop { background: var(--court); border-radius: 22px; overflow: hidden; position: relative; min-height: 300px; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 18px; }
+  .gauge span { display: block; text-transform: uppercase; margin-bottom: 6px; font: 800 11px/1 var(--display); letter-spacing: 1.5px; color: rgba(255,246,238,.8); }
+  .gauge div { position: relative; height: 22px; border-radius: 11px; background: linear-gradient(90deg, #ff2d6b 0 22%, #ffd23f 22% 40%, #2ee6d6 40% 60%, #ffd23f 60% 78%, #ff2d6b 78%); box-shadow: inset 0 0 0 3px rgba(20,10,31,.55); }
+  .gauge i { position: absolute; top: -5px; width: 8px; height: 32px; margin-left: -4px; border-radius: 4px; background: #fff6ee; box-shadow: 0 0 0 2px #140a1f; animation: run 1.7s linear infinite alternate; }
+  .gauge + .gauge i { animation-duration: 1.15s; }
+  @keyframes run { from { left: 4%; } to { left: 96%; } }
+  .hoop svg { width: 100%; height: auto; max-height: 300px; }
+  .hoop .fly { animation: fly 3.2s cubic-bezier(.3,.7,.4,1) infinite; transform-origin: center; }
+  @keyframes fly { 0% { transform: translate(-60px, 150px) scale(1.2); opacity: 0; } 8% { opacity: 1; } 55% { transform: translate(0, -18px) scale(.8); } 70% { transform: translate(0, 46px) scale(.74); opacity: 1; } 86%, 100% { transform: translate(0, 110px) scale(.74); opacity: 0; } }
+  .outs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .out { border-radius: 18px; padding: 14px; color: var(--ink); background: var(--c); box-shadow: 0 5px 0 color-mix(in srgb, var(--c) 55%, #000); }
+  .out b { display: block; font: 800 24px/1 var(--display); letter-spacing: 1.2px; }
+  .out span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.35; font-weight: 800; }
+  ul.ticks { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 9px; }
+  ul.ticks li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; font-size: 14px; line-height: 1.45; color: var(--muted); }
+  ul.ticks li::before { content: '✓'; width: 24px; height: 24px; border-radius: 50%; background: var(--action); color: var(--ink); display: grid; place-items: center; font: 800 13px/1 var(--display); }
+  ul.ticks li b { color: var(--text); }
+
+  /* ── season ── */
+  .season { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 12px; }
+  .track30 { display: flex; gap: 5px; margin-top: 14px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, #000 70%, transparent); mask-image: linear-gradient(90deg, #000 70%, transparent); }
+  .track30 i { flex: none; width: 42px; height: 42px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; font: 800 14px/1 var(--display); font-style: normal; color: var(--faint); }
+  .track30 i.on { background: var(--hot); color: var(--cream); border: 0; }
+  table.sp { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+  table.sp td { padding: 9px 0; border-bottom: 1px solid var(--line); color: var(--muted); }
+  table.sp tr:last-child td { border-bottom: 0; }
+  table.sp td:last-child { text-align: right; font: 800 16px/1 var(--display); color: var(--action); white-space: nowrap; }
+  .excl { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(160deg, #3a2a10, #140a1f); color: var(--cream); border-color: var(--yellow-shadow); }
+  .excl .card { --w: 170px; margin: 6px auto 14px; box-shadow: 0 0 34px rgba(255,210,63,.45), 0 10px 0 rgba(0,0,0,.35); animation: tilt 5s ease-in-out infinite; }
+  @keyframes tilt { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg) translateY(-6px); } }
+  .excl h3 { color: var(--yellow); } .excl p { color: rgba(255,246,238,.8); }
+  .split { display: flex; height: 44px; border-radius: 12px; overflow: hidden; margin-top: 12px; font: 800 13px/1 var(--display); color: var(--ink); }
+  .split i { display: grid; place-items: center; font-style: normal; }
+
+  /* ── currencies ── */
+  .cur { border-left: 6px solid var(--c); }
+  .cur .hd { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .cur .dot { width: 40px; height: 40px; border-radius: 50%; background: var(--c); color: var(--ink); display: grid; place-items: center; font: 800 19px/1 var(--display); flex: none; box-shadow: 0 3px 0 color-mix(in srgb, var(--c) 55%, #000); }
+  .cur h3 { margin: 0; }
+
+  /* ── fair ── */
+  .fair { background: var(--ink); color: var(--cream); border: 2px solid var(--teal); }
+  .fair p { color: rgba(255,246,238,.82); } .fair p b { color: var(--teal); }
+  .fair .num { font: 800 13px/1 var(--display); letter-spacing: 1.5px; color: var(--teal); margin-bottom: 8px; display: block; }
+
+  /* ── faq ── */
+  details.q { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 0 18px; }
+  details.q + details.q { margin-top: 8px; }
+  details.q summary { cursor: pointer; list-style: none; padding: 16px 0; display: flex; justify-content: space-between; gap: 12px; align-items: center; font: 800 16px/1.25 var(--display); letter-spacing: .5px; }
+  details.q summary::-webkit-details-marker { display: none; }
+  details.q summary::after { content: '+'; flex: none; width: 30px; height: 30px; border-radius: 10px; background: var(--surface2); border: 1px solid var(--line); display: grid; place-items: center; font: 800 20px/1 var(--display); color: var(--action); transition: transform .2s var(--out); }
+  details.q[open] summary::after { transform: rotate(45deg); }
+  details.q p { margin: 0 0 16px; color: var(--muted); font-size: 14.5px; }
+
+  /* ── footer ── */
+  .final { margin-top: 60px; background: var(--hot); color: var(--cream); text-align: center; padding: 54px 0 calc(40px + env(safe-area-inset-bottom)); position: relative; overflow: hidden; }
+  .final h2 { font-size: clamp(34px, 7vw, 60px); text-shadow: 0 5px 0 rgba(20,10,31,.35); }
+  .final p { margin: 0 auto 22px; max-width: 520px; color: rgba(255,246,238,.94); }
+  .final .links { margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font-size: 13.5px; }
+  .final .links a { color: var(--cream); }
+  .final small { display: block; margin-top: 18px; font-size: 12px; color: rgba(255,246,238,.7); }
+
+  @media (max-width: 860px) {
+    .hero-main { grid-template-columns: 1fr; }
+    .fan { width: 100%; max-width: 340px; height: 230px; margin: 6px auto 0; }
+    .fan .card { --w: 112px; margin-left: -56px; } .fan .card:nth-child(1) { --x: -84px; } .fan .card:nth-child(2) { --x: -43px; } .fan .card:nth-child(4) { --x: 43px; } .fan .card:nth-child(5) { --x: 84px; }
+    .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .packs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ft, .season { grid-template-columns: 1fr; }
+    .ranks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .strip { grid-template-columns: repeat(2, 1fr); } .stat b { font-size: 28px; }
+    .g2, .g3 { grid-template-columns: 1fr; }
+    .demo-bar { grid-template-columns: 1fr 1fr; } .demo-bar .shot { grid-column: 1 / -1; }
+    .outs { grid-template-columns: 1fr; }
+    .fam .card { --w: 78px; } .skin .card { --w: 90px; } .skins { gap: 10px; }
+    .wildrow { grid-template-columns: 1fr; }
+    .btn { height: 52px; font-size: 17px; padding: 0 20px; }
+    .barrow { grid-template-columns: 84px minmax(0, 1fr) 42px; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .rise { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="lines" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#fff6ee" stroke-width="4" aria-hidden="true">
+    <circle cx="820" cy="260" r="150"/><circle cx="820" cy="260" r="40"/><path d="M820 -20V540M-20 60h400a200 200 0 0 1 0 400H-20M-20 160h220v200H-20"/>
+  </svg>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="https://t.me/meme_jam_bot/meme_jam_app"><img src="./assets/logo.webp" alt="Meme Jam"><span data-t="brand"></span></a>
+      <div class="lang" role="group" aria-label="Language"><button data-lang="en">EN</button><button data-lang="ru">RU</button><button data-lang="ua">UA</button></div>
+    </div>
+    <div class="hero-main">
+      <div>
+        <span class="eyebrow"><i></i><span data-t="eyebrow"></span></span>
+        <h1 data-t="h1"></h1>
+        <p class="lead" data-t="lead"></p>
+        <div class="cta">
+          <a class="btn" href="https://t.me/meme_jam_bot/meme_jam_app" data-t="play"></a>
+          <a class="btn ghost" href="#try" data-t="tryBtn"></a>
+        </div>
+      </div>
+      <div class="fan" id="fan" aria-hidden="true"></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="strip">
+    <div class="stat"><b>36 + ★</b><span data-t="st1"></span></div>
+    <div class="stat"><b>5</b><span data-t="st2"></span></div>
+    <div class="stat"><b>2–5</b><span data-t="st3"></span></div>
+    <div class="stat"><b>4 Q</b><span data-t="st4"></span></div>
+  </div>
+</div>
+
+<nav class="toc"><div class="wrap" id="toc"></div></nav>
+
+<main class="wrap">
+
+  <section id="basics">
+    <span class="kicker" data-t="k1"></span>
+    <h2 data-t="t1"></h2>
+    <p class="sub" data-t="s1"></p>
+    <div class="grid g4" id="steps"></div>
+  </section>
+
+  <section id="try">
+    <span class="kicker" data-t="k2"></span>
+    <h2 data-t="t2"></h2>
+    <p class="sub" data-t="s2"></p>
+    <div class="panel demo rise">
+      <div class="demo-top">
+        <div class="sc"><span data-t="dScore"></span><b id="dScore">0</b></div>
+        <div class="q" id="dQ"></div>
+      </div>
+      <div class="courtbox">
+        <svg viewBox="0 0 600 300" preserveAspectRatio="none" fill="none" stroke="var(--court-line)" stroke-width="2" aria-hidden="true">
+          <rect x="8" y="8" width="584" height="284" rx="14"/><path d="M190 8v110a110 110 0 0 0 220 0V8"/><circle cx="300" cy="292" r="70"/><path d="M262 20h76" stroke-width="5"/><circle cx="300" cy="38" r="13"/>
+        </svg>
+        <div class="lanes" id="lanes"></div>
+      </div>
+      <div class="demo-bar">
+        <div class="shot"><b id="dShot"></b><span id="dHint"></span></div>
+        <button class="btn sm plain" id="dReset" data-t="dReset"></button>
+        <button class="btn sm orange" id="dShoot" data-t="dShoot"></button>
+      </div>
+      <div class="outcome" id="dOut"></div>
+      <div class="legend">
+        <span><i></i><span data-t="lgOpp"></span></span>
+        <span><i class="sq"></i><span data-t="lgSel"></span></span>
+        <span data-t="lgNote"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="match">
+    <span class="kicker" data-t="k3"></span>
+    <h2 data-t="t3"></h2>
+    <p class="sub" data-t="s3"></p>
+    <div class="grid g4 rise" id="combos"></div>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="panel rise"><h3 data-t="defH"></h3><p data-t="defT"></p><div class="bars" id="defBars"></div></div>
+      <div class="panel rise"><h3 data-t="clH"></h3><p data-t="clT"></p><div class="bars" id="clBars"></div></div>
+    </div>
+    <div class="grid g3" style="margin-top:12px" id="matchFacts"></div>
+  </section>
+
+  <section id="cards">
+    <span class="kicker" data-t="k4"></span>
+    <h2 data-t="t4"></h2>
+    <p class="sub" data-t="s4"></p>
+    <div class="grid g2" id="fams"></div>
+    <div class="ranks rise" id="ranks"></div>
+    <div class="panel wildrow rise"><div class="cs" id="wilds"></div><div><h3 data-t="wildH"></h3><p data-t="wildT"></p></div></div>
+  </section>
+
+  <section id="modes">
+    <span class="kicker" data-t="k5"></span>
+    <h2 data-t="t5"></h2>
+    <p class="sub" data-t="s5"></p>
+    <div class="grid g3" id="modeGrid"></div>
+  </section>
+
+  <section id="collection">
+    <span class="kicker" data-t="k6"></span>
+    <h2 data-t="t6"></h2>
+    <p class="sub" data-t="s6"></p>
+    <div class="grid g2">
+      <div class="panel rise" style="display:flex;flex-direction:column"><h3 data-t="skinH"></h3><p data-t="skinT"></p><div class="skins" id="skins" style="margin:auto 0;padding:18px 0 6px"></div></div>
+      <div class="grid">
+        <div class="panel rise"><h3 data-t="lvH"></h3><p data-t="lvT"></p><div class="lv"><i>LV 0</i><i class="on">+2%</i><i class="on">+4%</i><i class="on">+6%</i><i>+8%</i><i>+10%</i></div></div>
+        <div class="panel rise"><h3 data-t="crH"></h3><p data-t="crT"></p><div class="tags"><span class="tag">Common · 15</span><span class="tag">Rare · 60</span><span class="tag">Epic · 180</span><span class="tag y">Legendary / Wild · 600</span></div></div>
+        <div class="panel rise"><h3 data-t="stH"></h3><p data-t="stT"></p></div>
+      </div>
+    </div>
+    <h3 style="margin:26px 0 12px" data-t="pkH"></h3>
+    <div class="packs" id="packs"></div>
+  </section>
+
+  <section id="throw">
+    <span class="kicker" data-t="k7"></span>
+    <h2 data-t="t7"></h2>
+    <p class="sub" data-t="s7"></p>
+    <div class="ft">
+      <div class="hoop rise">
+        <svg viewBox="40 10 220 270" aria-hidden="true">
+          <rect x="70" y="30" width="160" height="104" rx="8" fill="rgba(255,246,238,.12)" stroke="#fff6ee" stroke-width="5"/>
+          <rect x="118" y="78" width="64" height="46" rx="3" fill="none" stroke="#fff6ee" stroke-width="4"/>
+          <ellipse cx="150" cy="136" rx="46" ry="11" fill="none" stroke="#b34e00" stroke-width="7"/>
+          <g class="fly" style="transform-box: fill-box"><g transform="translate(150 118)"><circle r="26" fill="#ff7a1a" stroke="#140a1f" stroke-width="4"/><path d="M-26 0h52M0-26v52M-18-18c10 10 10 26 0 36M18-18c-10 10-10 26 0 36" stroke="#140a1f" stroke-width="3" fill="none"/></g></g>
+          <path d="M106 138l14 70M194 138l-14 70M128 144l8 64M172 144l-8 64M150 146v62M112 166h76M118 190h64M120 208h60" stroke="#fff6ee" stroke-width="3" opacity=".85" fill="none"/>
+          <path d="M104 136a46 11 0 0 0 92 0" fill="none" stroke="#ff7a1a" stroke-width="7"/>
+        </svg>
+        <div class="gauge"><span data-t="gAim"></span><div><i></i></div></div>
+        <div class="gauge"><span data-t="gPow"></span><div><i></i></div></div>
+      </div>
+      <div class="grid">
+        <div class="outs rise" id="outs"></div>
+        <div class="panel rise"><h3 data-t="ftFreeH"></h3><ul class="ticks" id="ftFree"></ul></div>
+        <div class="panel rise" style="border-color:var(--yellow-shadow)"><h3 data-t="ftPaidH"></h3><ul class="ticks" id="ftPaid"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="season">
+    <span class="kicker" data-t="k8"></span>
+    <h2 data-t="t8"></h2>
+    <p class="sub" data-t="s8"></p>
+    <div class="season">
+      <div class="grid">
+        <div class="panel rise"><h3 data-t="seTrackH"></h3><p data-t="seTrackT"></p><div class="track30" id="track30"></div></div>
+        <div class="panel rise"><h3 data-t="seSpH"></h3><table class="sp" id="spTable"></table></div>
+        <div class="panel rise"><h3 data-t="seDrawH"></h3><p data-t="seDrawT"></p>
+          <div class="split"><i style="flex:50;background:var(--yellow)">1 · 50%</i><i style="flex:15;background:#c9ced8">2 · 15%</i><i style="flex:15;background:#c98a12">3 · 15%</i><i style="flex:20;background:var(--teal)">4–10 · 20%</i></div>
+        </div>
+      </div>
+      <div class="panel excl rise"><span class="tag y" data-t="seExclTag"></span><div id="exclCard"></div><h3 data-t="seExclH"></h3><p data-t="seExclT"></p></div>
+    </div>
+  </section>
+
+  <section id="money">
+    <span class="kicker" data-t="k9"></span>
+    <h2 data-t="t9"></h2>
+    <p class="sub" data-t="s9"></p>
+    <div class="grid g2" id="curs"></div>
+  </section>
+
+  <section id="fair">
+    <span class="kicker" data-t="k10"></span>
+    <h2 data-t="t10"></h2>
+    <p class="sub" data-t="s10"></p>
+    <div class="grid g3" id="fairGrid"></div>
+  </section>
+
+  <section id="faq">
+    <span class="kicker">FAQ</span>
+    <h2 data-t="t11"></h2>
+    <div id="faqList" style="margin-top:16px"></div>
+  </section>
+</main>
+
+<footer class="final">
+  <div class="wrap">
+    <h2 data-t="finH"></h2>
+    <p data-t="finT"></p>
+    <a class="btn" href="https://t.me/meme_jam_bot/meme_jam_app" data-t="play"></a>
+    <div class="links">
+      <a href="https://t.me/meme_jam_support_bot" data-t="lSupport"></a>
+      <a href="https://redeyeddev.github.io/meme-jam-raffle-verifier/" data-t="lVerifier" id="lVer"></a>
+      <a href="https://meme-jam.com" >meme-jam.com</a>
+    </div>
+    <small data-t="finNote"></small>
+  </div>
+</footer>
+
+<script>
+const PLAY = 'https://t.me/meme_jam_bot/meme_jam_app';
+const VERIFIER = 'https://redeyeddev.github.io/meme-jam-raffle-verifier/';
+
+const I18N = {
+  en: {
+    brand: 'RULEBOOK', eyebrow: 'Telegram mini app · beta', h1: 'How to <em>play</em><br>Meme Jam',
+    lead: 'A meme basketball card game. Take cards off the court, chain them into combos, get past the defense and outscore the other side over four quarters.',
+    play: 'Play in Telegram', tryBtn: 'Try a shot ↓',
+    st1: 'cards: 4 families × 9 ranks plus Wild', st2: 'lanes on the court, one pile each', st3: 'points per shot, by combo size', st4: 'quarters, then sudden-death overtime',
+    nav: ['Basics', 'Try it', 'Match', 'Cards', 'Modes', 'Collection', 'Free Throw', 'Season', 'Currencies', 'Fair play', 'FAQ'],
+    k1: 'In 30 seconds', t1: 'The whole game in four steps', s1: 'Players take turns. Every turn is one shot at the hoop.',
+    steps: [
+      ['Take a card', 'Pick one of the five lanes and take its top card. One card is a layup for 2 points.'],
+      ['Chain a combo', 'Add top cards of the same family from other lanes, one per lane. Up to 4 cards for 5 points.'],
+      ['Beat the defense', 'The bench sends one defender per card. A defender of the same family blocks it. One card through and the points are yours.'],
+      ['Hit the clutch', 'Everything blocked? Your own rare cards still roll a clutch chance and can save the shot.'],
+    ],
+    k2: 'Hands-on', t2: 'Take a few shots right here', s2: 'A practice court with the real rules. Tap a top card, add cards of the same family from other lanes, then shoot.',
+    dScore: 'Score', dReset: 'New court', dShoot: 'Shoot',
+    lgOpp: "red dot: opponent's card (scores, but no clutch)", lgSel: 'teal ring: can join the combo', lgNote: 'Practice only: the dice here are local. In the game every roll comes from the match seed on the server.',
+    dPick: 'Pick a card', dPickHint: 'Tap the top card of any lane to start a shot.',
+    dHintMore: 'Glowing cards share the family. Add them or shoot.', dHintMax: 'That is the biggest combo. Shoot!', dHintSolo: 'No matching cards on top right now. Shoot or pick another card.',
+    pts: 'pts', dOver: 'Court is empty', dOverHint: 'Final buzzer. Deal a new court to keep shooting.',
+    rOpen: 'open', rBlk: 'blocked', rClutch: 'clutch', rScore: 'Scores +{n}', rClutchScore: 'Clutch! +{n}', rBlocked: 'Blocked',
+    yOpen: 'A card got past its defender, so the whole shot counts.',
+    yClutch: 'All cards were blocked, but your {card} rolled its {p}% clutch and saved the shot.',
+    yBlockedOwn: 'Every card met a defender of its family (or the Ref), and no clutch came through.',
+    yBlockedNone: "Every card was blocked, and none of them could roll a clutch: commons have 0%, the opponent's cards never clutch for you.",
+    k3: 'The match', t3: 'Shots, defense and clutch', s3: 'Both decks are shuffled into one shared court: 45 cards in 5 lanes, the top three of each lane face up. Every card remembers its owner.',
+    combo: [['Layup', '1 card'], ['Three', '2 cards'], ['Alley-oop', '3 cards'], ['Poster', '4 cards']],
+    defH: 'Defense', defT: 'The bench holds 18 defenders: 4 per family and 2 Refs that block anything. One defender is drawn for each attacking card. The shot fails only if <b>every</b> card is blocked, so bigger combos get through more often.',
+    defBars: ['1 card', '2 cards', '3 cards', '4 cards'], defNote: 'gets through',
+    clH: 'Clutch', clT: 'When the shot is fully blocked, each attacking card <b>from your own deck</b> rolls its clutch. One success and the shot counts. This is the only place where your collection changes the result.',
+    clNote: ['6 · 7 · 8', '9 · 10', 'J · Q', 'K · A · Wild'],
+    facts: [
+      ['Shared court', "Any card on top is fair game, yours or the opponent's. Take their strong cards before they do: a card played by you gives them no clutch."],
+      ['Quarters and overtime', 'A quarter ends after 11 cards leave the court. The match ends when the court is empty. A tie goes to overtime: two short lanes, first score wins.'],
+      ['Cards are never lost', 'Played cards go to the discard pile of the match, not out of your collection. After the final buzzer both decks are exactly as they were.'],
+    ],
+    k4: 'The cards', t4: 'Four families, nine ranks', s4: 'Family decides what combines and who blocks. Rank decides rarity, and rarity decides clutch.',
+    fams: { frogs: 'Pepe and friends. Green and calm under pressure.', dogs: 'Doge, Cheems and the pack. Much dunk, very wow.', wojaks: 'Feels on the court, from Doomer to Chad.', cats: 'Longcat, Grumpy and the rest of the internet.' },
+    rar: [['Common', 'no clutch'], ['Rare', 'clutch 8%'], ['Epic', 'clutch 15%'], ['Legendary', 'clutch 25%']],
+    wildH: 'Wild Meme', wildT: 'Trollface and the rage comics crew. A Wild fits <b>any</b> family in a combo and carries a 25% clutch. It comes from packs, crafting, Free Throw and season rewards. A deck holds two at most.',
+    k5: 'Game modes', t5: 'Where to play', s5: 'Bots for practice and progress, real players for stakes and glory.',
+    modes: [
+      ['🏀', 'Pickup game', 'vs bot teams', 'Five meme teams from Frog Nation to the All-Stars boss. 5 free matches a day; a refill adds 5 more. Wins pay Hype, rating, season points and sometimes a card.', ['your deck', '5 free / day'], 'teams'],
+      ['⚡', 'Live match', 'real-time PvP', 'Turn by turn against a real player: matchmaking by rating, an open room, or a private room by code. 15 seconds per move. Three auto-moves in a row or leaving is a forfeit.', ['your deck', 'free or stake', 'no daily limit']],
+      ['🎯', 'Duel', 'same court, best score', 'You and a rival each play the same court against the same bot. Higher score wins, then fewer moves; a full tie is refunded. 24 h to accept, 24 h to play.', ['neutral deck', 'stake: Hype · GRAM · USDT', 'fee 5%']],
+      ['🪜', 'Daily Ladder', 'one court for everyone', 'Every day all players get the same court. Two attempts (the second costs Hype). The top 10 of the day take Hype prizes. Resets at 00:00 UTC.', ['neutral deck', 'daily prizes']],
+      ['🏆', 'Weekly Cup', 'top 16 playoff', 'The 16 best of the weekly leaderboard meet on Sunday 18:00 UTC. Single elimination, 24 h per round. Prizes: GRAM from the duel fee pool, Hype and packs.', ['neutral deck', 'by qualification', 'GRAM prizes']],
+      ['🎓', 'Tutorial', 'first match', 'A guided match with a coach who shows shots, combos and defense. Finishing it pays a one-time Hype bonus. Replay it any time from your profile.', ['4 scripted moves', 'bonus once']],
+    ],
+    neutral: 'In Duel, Ladder and Cup everyone plays the same neutral 36-card deck, so the collection gives no edge there. One more twist in these modes: each opponent card in your combo costs 1 point.',
+    k6: 'Collection', t6: 'Build a better deck', s6: 'You start with 24 cards: ranks 6 to J of every family. Queens, Kings, Aces and Wilds are out there to find.',
+    skinH: 'Skins add clutch', skinT: 'The same position can drop as a Holo or Gold skin with its own art and a clutch bonus. One skin per position goes into the deck.',
+    skins: [['Base', 'the card as is'], ['Holo', '+5% clutch'], ['Gold', '+10% clutch']],
+    lvH: 'Duplicates level up', lvT: 'Every duplicate raises the card level: <b>+2% clutch per level</b>, up to +10%. Skin and level bonuses together cap at +20% per card.',
+    crH: 'Clout and crafting', crT: 'Duplicates also pay <b>Clout</b>. Spend it to craft any card you want, Wild included. Craft cost in Clout:',
+    stH: 'Where cards come from', stT: 'Packs, drops after Pickup wins, crafting, Free Throw, season tiers and gifts for inviting friends. A new position goes straight into your deck.',
+    pkH: 'Packs',
+    packs: [['Daily', 'Free once a day', '1 card'], ['Bronze', 'Rare or better guaranteed', '3 cards'], ['Silver', 'Epic or better guaranteed, Wild chance', '5 cards'], ['Gold', 'Legendary guaranteed, best Wild and skin odds', '8 cards']],
+    gAim: 'Aim', gPow: 'Power',
+    k7: 'Daily mini-game', t7: 'Free Throw', s7: 'Two sliders run across the screen: aim and power. Stop each with a tap. The closer to the center, the cleaner the shot.',
+    outs: [['MISS', 'Hype 20. Better luck on the next one.'], ['HIT', 'Hype 80, sometimes season points on top.'], ['SWISH', 'Hype 200+, a Wild, a Bronze pack or season points.']],
+    ftFreeH: 'Free throws', ftFree: ['<b>3 free throws every day.</b>', 'Streaks pay extra: <b>3 swishes in a row</b> give a Bronze pack, <b>5 in a row</b> a big Hype prize.', 'Play <b>7 days in a row</b> for one more Bronze pack.', 'A separate small pool of NFT gifts can drop on a free hit, rarely.'],
+    ftPaidH: 'Bought throws: real prizes', ftPaid: ['Bundles of 5 for Telegram Stars, GRAM or USDT. They never expire.', 'A hit or a swish can pay <b>real USDT or GRAM</b>, and a swish can win back the price of the whole bundle.', '<b>Guarantee:</b> five bought throws in a row without a money prize, and the next one pays.', '<b>Telegram NFT gifts</b> drop on hits. The current gift pool is shown in the game. A won gift lands in your wallet: withdraw it to your Telegram profile or swap it for throws.', 'Money prizes come from a prize pool funded by <b>50% of every bundle sold</b>.'],
+    k8: 'Every 28 days', t8: 'Season Pass', s8: 'Play any mode, earn Season Points (SP) and climb 30 tiers of rewards.',
+    seTrackH: '30 tiers, 100 SP each', seTrackT: 'The free row pays Hype and packs. The <b>Pass</b> doubles every SP you earn and unlocks the premium row: Gold packs, Wild cards and the exclusive skin at tier 30.',
+    seSpH: 'Where SP come from', sp: [['Pickup win (first 5 a day; no cap in refill matches)', '+40'], ['Duel or live match win', '+80'], ['Weekly Cup match', '+150'], ['Daily Ladder top 10', '+100'], ['Free Throw hit / swish', '+10 / +25']],
+    seDrawH: 'End-of-season prize draw', seDrawT: '<b>30% of all GRAM and USDT</b> paid for Passes goes into the season fund. Pass holders get tickets: 1 for the Pass and 1 for every tier reached. Ten winners split the fund:',
+    seExclTag: 'Tier 30 · exclusive', seExclH: 'Season King', seExclT: 'A golden King with a +10% clutch bonus. Each season has its own, and it never returns.',
+    k9: 'Economy', t9: 'Four currencies', s9: 'Two are for the game, one is real money, one is just a way to pay.',
+    curs: [
+      ['H', 'Hype', 'The soft currency. Earned in every mode, in Free Throw, tasks and season tiers. Spent on Hype duels, the second Ladder attempt and raffle tickets. Cannot be withdrawn.'],
+      ['C', 'Clout', 'Card dust. Paid for every duplicate you pull. Spent on crafting the exact card you are missing.'],
+      ['$', 'GRAM and USDT', 'Real crypto on the TON network. Deposit it or win it in duels, live matches, the Weekly Cup, Free Throw, the season draw and raffles. Stake it, shop with it, or withdraw to your wallet.'],
+      ['★', 'Telegram Stars', 'A payment method only: packs, refills, throw bundles and the Season Pass. Stars are never paid out as a reward and are not kept as a balance.'],
+    ],
+    k10: 'No trust needed', t10: 'Fair play', s10: 'The match engine is a pure function: the same seed and the same moves always give the same game.',
+    fair: [
+      ['01 · Matches', 'Everything random in a match, from the shuffle to defenders and clutch rolls, is derived from the <b>match seed</b> on the server. The app only sends your moves. Nothing is rolled on your phone.'],
+      ['02 · Raffles', 'Raffle winners depend on a secret seed committed before sales and a public <b>drand</b> randomness round that appears only after sales close. Anyone can recompute the draw in the <a href="' + VERIFIER + '">open verifier</a>.'],
+      ['03 · Season draw', 'The season draw seed mixes in the hash of the first <b>TON blockchain block</b> after the season ends. Nobody, the game included, can know the outcome while tiers can still be earned.'],
+    ],
+    t11: 'Quick answers',
+    faq: [
+      ['Can I lose my cards in a match?', 'No. The court is a temporary layout. Whatever happens in a match, your collection and deck stay the same. Stakes are always currency, never cards.'],
+      ['Can I buy a win?', 'No. Packs improve clutch, and clutch only matters for shots the defense fully blocked, roughly one in ten. The bonus per card is capped at +20%. It is an edge you can see, not a guaranteed win.'],
+      ['Why does my collection not matter in duels?', 'Duel, Daily Ladder and Weekly Cup are about equal conditions: both sides play a neutral deck on the same court. Your own deck plays in Pickup games and live matches.'],
+      ['Is there a daily limit?', 'Only for Pickup games against bots: 5 free matches a day, plus refills. Live matches and duels have no limit. The Ladder has its own two attempts a day.'],
+      ['What do I get for inviting friends?', 'A Bronze pack after a friend plays 3 matches and a Silver pack after 10, plus 5% of the fees from their staked games.'],
+      ['Where do the real prizes come from?', 'From players, openly: duel and live stakes go to the winner minus a 5% fee, the Cup pays from the pool of those fees, Free Throw pays from half of bundle sales, and the season draw from 30% of Pass sales.'],
+      ['Something looks wrong. Who do I tell?', 'Write to the <a href="https://t.me/meme_jam_support_bot">support bot</a>. The game is in beta, so reports are very welcome.'],
+    ],
+    finH: 'Tip-off time', finT: 'The tutorial takes two minutes, and the first packs are on the house.',
+    lSupport: 'Support', lVerifier: 'Raffle verifier', finNote: 'Meme Jam is in beta. Numbers on this page can be tuned; the game itself always shows the current values and prices.',
+    your: 'your',
+  },
+  ru: {
+    brand: 'ПРАВИЛА', eyebrow: 'Мини-апп в Telegram · бета', h1: 'Как <em>играть</em><br>в Meme Jam',
+    lead: 'Карточный мем-баскетбол. Бери карты с корта, собирай из них комбо, проходи защиту и набери больше соперника за четыре четверти.',
+    play: 'Играть в Telegram', tryBtn: 'Попробовать бросок ↓',
+    st1: 'карт: 4 семейства × 9 рангов и Wild', st2: 'лейнов на корте, в каждом стопка', st3: 'очков за бросок, по размеру комбо', st4: 'четверти, дальше овертайм до первого попадания',
+    nav: ['Основы', 'Попробуй', 'Матч', 'Карты', 'Режимы', 'Коллекция', 'Free Throw', 'Сезон', 'Валюты', 'Честность', 'FAQ'],
+    k1: 'За 30 секунд', t1: 'Вся игра в четырёх шагах', s1: 'Игроки ходят по очереди. Каждый ход — один бросок по кольцу.',
+    steps: [
+      ['Возьми карту', 'Выбери один из пяти лейнов и возьми верхнюю карту. Одна карта — это лэй-ап на 2 очка.'],
+      ['Собери комбо', 'Добавь верхние карты того же семейства с других лейнов, по одной с лейна. До 4 карт и 5 очков.'],
+      ['Пройди защиту', 'Скамейка выставляет по защитнику на каждую карту. Защитник того же семейства её блокирует. Прошла хоть одна карта — очки твои.'],
+      ['Вытащи клатч', 'Заблокировали всё? Твои собственные редкие карты кидают шанс клатча и могут спасти бросок.'],
+    ],
+    k2: 'Руками', t2: 'Сделай пару бросков прямо тут', s2: 'Тренировочный корт с настоящими правилами. Тапни верхнюю карту, добавь карты того же семейства с других лейнов и бросай.',
+    dScore: 'Счёт', dReset: 'Новый корт', dShoot: 'Бросок',
+    lgOpp: 'красная точка: карта соперника (очки даёт, клатч нет)', lgSel: 'бирюзовая рамка: можно добавить в комбо', lgNote: 'Это тренировка: кубики здесь локальные. В игре каждый ролл считается из сида матча на сервере.',
+    dPick: 'Выбери карту', dPickHint: 'Тапни верхнюю карту любого лейна, чтобы начать бросок.',
+    dHintMore: 'Подсвеченные карты того же семейства. Добавляй или бросай.', dHintMax: 'Это максимальное комбо. Бросай!', dHintSolo: 'Подходящих карт сверху сейчас нет. Бросай или выбери другую.',
+    pts: 'очк.', dOver: 'Корт пуст', dOverHint: 'Финальная сирена. Раздай новый корт и бросай дальше.',
+    rOpen: 'прошла', rBlk: 'блок', rClutch: 'клатч', rScore: 'Попал +{n}', rClutchScore: 'Клатч! +{n}', rBlocked: 'Блок',
+    yOpen: 'Одна из карт прошла своего защитника, поэтому бросок засчитан целиком.',
+    yClutch: 'Все карты заблокированы, но твоя {card} выбила клатч {p}% и спасла бросок.',
+    yBlockedOwn: 'Каждой карте достался защитник её семейства (или Ref), и клатч не сработал.',
+    yBlockedNone: 'Все карты заблокированы, а кидать клатч было некому: у обычных карт 0%, а чужие карты клатч тебе не дают.',
+    k3: 'Матч', t3: 'Броски, защита и клатч', s3: 'Обе колоды перемешаны в один общий корт: 45 карт в 5 лейнах, три верхние в каждом открыты. Каждая карта помнит своего хозяина.',
+    combo: [['Layup', '1 карта'], ['Three', '2 карты'], ['Alley-oop', '3 карты'], ['Poster', '4 карты']],
+    defH: 'Защита', defT: 'На скамейке 18 защитников: по 4 на семейство и 2 Ref, которые блокируют кого угодно. На каждую атакующую карту тянется один защитник. Бросок отбит, только если заблокированы <b>все</b> карты, поэтому большое комбо проходит чаще.',
+    defBars: ['1 карта', '2 карты', '3 карты', '4 карты'], defNote: 'проходит',
+    clH: 'Клатч', clT: 'Если бросок полностью заблокирован, каждая атакующая карта <b>из твоей колоды</b> кидает клатч. Сработал хоть один — бросок засчитан. Это единственное место, где коллекция влияет на результат.',
+    clNote: ['6 · 7 · 8', '9 · 10', 'J · Q', 'K · A · Wild'],
+    facts: [
+      ['Общий корт', 'Любую верхнюю карту можно взять, свою или чужую. Забирай сильные карты соперника раньше него: карта, сыгранная тобой, клатч ему уже не даст.'],
+      ['Четверти и овертайм', 'Четверть заканчивается, когда с корта ушло 11 карт. Матч заканчивается, когда корт пуст. Ничья — овертайм: два коротких лейна, игра до первого попадания.'],
+      ['Карты не теряются', 'Сыгранные карты уходят в сброс матча, а не из коллекции. После финальной сирены обе колоды ровно такие же, как до игры.'],
+    ],
+    k4: 'Карты', t4: 'Четыре семейства, девять рангов', s4: 'Семейство решает, что собирается в комбо и кто блокирует. Ранг задаёт редкость, а редкость — клатч.',
+    fams: { frogs: 'Пепе и компания. Зелёные и спокойные под давлением.', dogs: 'Doge, Cheems и вся стая. Much dunk, very wow.', wojaks: 'Чувства на корте: от Думера до Чада.', cats: 'Longcat, Grumpy и остальной интернет.' },
+    rar: [['Common', 'без клатча'], ['Rare', 'клатч 8%'], ['Epic', 'клатч 15%'], ['Legendary', 'клатч 25%']],
+    wildH: 'Wild Meme', wildT: 'Trollface и вся банда rage comics. Wild подходит к <b>любому</b> семейству в комбо и несёт клатч 25%. Приходит из паков, крафта, Free Throw и наград сезона. В колоде максимум две.',
+    k5: 'Режимы', t5: 'Где играть', s5: 'Боты — для практики и прогресса, живые игроки — для ставок и славы.',
+    modes: [
+      ['🏀', 'Pickup game', 'против команд-ботов', 'Пять мем-команд от Frog Nation до босса All-Stars. 5 бесплатных матчей в день, рефилл добавляет ещё 5. Победы дают Hype, рейтинг, очки сезона и иногда карту.', ['своя колода', '5 бесплатно / день'], 'teams'],
+      ['⚡', 'Живой матч', 'PvP в реальном времени', 'Ход за ходом против живого игрока: подбор по рейтингу, открытая комната или приватная по коду. 15 секунд на ход. Три автохода подряд или выход — поражение.', ['своя колода', 'бесплатно или ставка', 'без лимита']],
+      ['🎯', 'Дуэль', 'один корт, лучший счёт', 'Ты и соперник по отдельности играете один и тот же корт против одного бота. Побеждает больший счёт, потом меньше ходов; полная ничья — возврат. 24 ч на принятие, 24 ч на игру.', ['нейтральная колода', 'ставка: Hype · GRAM · USDT', 'комиссия 5%']],
+      ['🪜', 'Daily Ladder', 'один корт на всех', 'Каждый день все игроки получают один и тот же корт. Две попытки (вторая за Hype). Топ-10 дня забирает призы в Hype. Сброс в 00:00 UTC.', ['нейтральная колода', 'призы каждый день']],
+      ['🏆', 'Weekly Cup', 'плей-офф топ-16', '16 лучших недельного топа встречаются в воскресенье в 18:00 UTC. Игра на вылет, 24 ч на раунд. Призы: GRAM из пула комиссий дуэлей, Hype и паки.', ['нейтральная колода', 'по квалификации', 'призы в GRAM']],
+      ['🎓', 'Обучение', 'первый матч', 'Матч с тренером, который показывает броски, комбо и защиту. За прохождение — разовый бонус Hype. Повторить можно в любой момент из профиля.', ['4 хода по сценарию', 'бонус один раз']],
+    ],
+    neutral: 'В дуэли, лестнице и кубке все играют одной нейтральной колодой из 36 карт, коллекция там преимущества не даёт. И ещё одна особенность этих режимов: каждая карта соперника в твоём комбо стоит на 1 очко меньше.',
+    k6: 'Коллекция', t6: 'Собери колоду сильнее', s6: 'Ты стартуешь с 24 картами: ранги от 6 до J каждого семейства. Дамы, Короли, Тузы и Wild ждут, когда ты их добудешь.',
+    skinH: 'Скины добавляют клатч', skinT: 'Та же позиция может выпасть в скине Holo или Gold со своим артом и бонусом к клатчу. В колоду идёт один скин на позицию.',
+    skins: [['Base', 'карта как есть'], ['Holo', '+5% клатч'], ['Gold', '+10% клатч']],
+    lvH: 'Дубли качают уровень', lvT: 'Каждый дубль поднимает уровень карты: <b>+2% клатча за уровень</b>, до +10%. Бонусы скина и уровня в сумме не больше +20% на карту.',
+    crH: 'Clout и крафт', crT: 'За дубли ещё начисляется <b>Clout</b>. За него крафтится любая нужная карта, включая Wild. Цена крафта в Clout:',
+    stH: 'Откуда берутся карты', stT: 'Паки, дроп после побед в Pickup, крафт, Free Throw, тиры сезона и подарки за приглашённых друзей. Новая позиция сразу встаёт в колоду.',
+    pkH: 'Паки',
+    packs: [['Daily', 'Бесплатно раз в сутки', '1 карта'], ['Bronze', 'Гарантия Rare или выше', '3 карты'], ['Silver', 'Гарантия Epic или выше, шанс Wild', '5 карт'], ['Gold', 'Гарантия Legendary, лучшие шансы на Wild и скины', '8 карт']],
+    gAim: 'Направление', gPow: 'Сила',
+    k7: 'Мини-игра на каждый день', t7: 'Free Throw', s7: 'По экрану бегут два бегунка: направление и сила. Останови каждый тапом. Чем ближе к центру, тем чище бросок.',
+    outs: [['MISS', 'Hype 20. Повезёт на следующем.'], ['HIT', 'Hype 80, иногда сверху очки сезона.'], ['SWISH', 'Hype 200+, Wild, Bronze-пак или очки сезона.']],
+    ftFreeH: 'Бесплатные броски', ftFree: ['<b>3 бесплатных броска каждый день.</b>', 'Серии дают больше: <b>3 swish подряд</b> — Bronze-пак, <b>5 подряд</b> — большой приз в Hype.', 'Играй <b>7 дней подряд</b> и получи ещё один Bronze-пак.', 'На бесплатном попадании изредка выпадает NFT-гифт из отдельного небольшого пула.'],
+    ftPaidH: 'Купленные броски: реальные призы', ftPaid: ['Пачки по 5 бросков за Telegram Stars, GRAM или USDT. Броски не сгорают.', 'Попадание или swish может принести <b>реальные USDT или GRAM</b>, а swish — отбить цену всей пачки.', '<b>Гарантия:</b> пять купленных бросков подряд без денежного приза — и следующий его даёт.', 'При попадании выпадают <b>NFT-гифты Telegram</b>. Текущий пул гифтов виден в игре. Выигранный гифт попадает в кошелёк: выведи его в свой профиль Telegram или обменяй на броски.', 'Денежные призы платятся из призового пула, в который идёт <b>50% с каждой проданной пачки</b>.'],
+    k8: 'Каждые 28 дней', t8: 'Season Pass', s8: 'Играй в любом режиме, зарабатывай очки сезона (SP) и поднимайся по 30 тирам наград.',
+    seTrackH: '30 тиров по 100 SP', seTrackT: 'Бесплатный ряд даёт Hype и паки. <b>Pass</b> удваивает все заработанные SP и открывает премиум-ряд: Gold-паки, Wild и эксклюзивный скин на 30-м тире.',
+    seSpH: 'Откуда берутся SP', sp: [['Победа в Pickup (первые 5 в день; в матчах рефилла без лимита)', '+40'], ['Победа в дуэли или живом матче', '+80'], ['Матч Weekly Cup', '+150'], ['Топ-10 Daily Ladder', '+100'], ['Free Throw: попадание / swish', '+10 / +25']],
+    seDrawH: 'Розыгрыш в конце сезона', seDrawT: '<b>30% всех GRAM и USDT</b>, заплаченных за Pass, идут в фонд сезона. Владельцы Pass получают билеты: 1 за сам Pass и по 1 за каждый пройденный тир. Фонд делят десять победителей:',
+    seExclTag: 'Тир 30 · эксклюзив', seExclH: 'Король сезона', seExclT: 'Золотой Король с бонусом +10% к клатчу. У каждого сезона свой, и больше он не повторится.',
+    k9: 'Экономика', t9: 'Четыре валюты', s9: 'Две игровые, одна — реальные деньги, ещё одна — просто способ оплаты.',
+    curs: [
+      ['H', 'Hype', 'Мягкая валюта. Зарабатывается во всех режимах, во Free Throw, заданиях и тирах сезона. Тратится на дуэли за Hype, вторую попытку лестницы и билеты розыгрышей. Не выводится.'],
+      ['C', 'Clout', 'Карточная пыль. Начисляется за каждый дубль. Тратится на крафт именно той карты, которой не хватает.'],
+      ['$', 'GRAM и USDT', 'Реальная крипта в сети TON. Пополни баланс или выиграй в дуэлях, живых матчах, Weekly Cup, Free Throw, розыгрыше сезона и розыгрышах призов. Ставь, покупай или выводи на свой кошелёк.'],
+      ['★', 'Telegram Stars', 'Только способ оплаты: паки, рефилл, пачки бросков и Season Pass. Stars не выдаются как награда и не хранятся на балансе.'],
+    ],
+    k10: 'Верить на слово не нужно', t10: 'Честная игра', s10: 'Движок матча — чистая функция: один и тот же сид и одни и те же ходы всегда дают одну и ту же игру.',
+    fair: [
+      ['01 · Матчи', 'Всё случайное в матче, от раскладки до защитников и клатча, выводится из <b>сида матча</b> на сервере. Приложение отправляет только твои ходы. На телефоне ничего не роллится.'],
+      ['02 · Розыгрыши', 'Победители зависят от секретного сида, зафиксированного до продаж, и публичного раунда случайности <b>drand</b>, который появляется только после закрытия продаж. Любой может пересчитать розыгрыш в <a href="' + VERIFIER + '?lang=ru">открытом верификаторе</a>.'],
+      ['03 · Розыгрыш сезона', 'В сид розыгрыша сезона подмешан хэш первого <b>блока блокчейна TON</b> после конца сезона. Никто, включая саму игру, не знает исход, пока ещё можно набирать тиры.'],
+    ],
+    t11: 'Короткие ответы',
+    faq: [
+      ['Могу ли я потерять карты в матче?', 'Нет. Корт — временная раскладка. Что бы ни случилось в матче, коллекция и колода остаются прежними. Ставка — всегда валюта, никогда не карты.'],
+      ['Можно ли купить победу?', 'Нет. Паки усиливают клатч, а клатч важен только для бросков, которые защита заблокировала полностью, это примерно каждый десятый. Бонус карты ограничен +20%. Это заметное преимущество, но не гарантия победы.'],
+      ['Почему в дуэлях коллекция не важна?', 'Дуэль, Daily Ladder и Weekly Cup — про равные условия: обе стороны играют нейтральной колодой на одном корте. Своя колода играет в Pickup и в живых матчах.'],
+      ['Есть ли дневной лимит?', 'Только на матчи с ботами (Pickup): 5 бесплатных в день плюс рефилл. Живые матчи и дуэли без лимита. У лестницы свои две попытки в день.'],
+      ['Что я получу за приглашённых друзей?', 'Bronze-пак, когда друг сыграет 3 матча, и Silver-пак после 10, плюс 5% комиссий с его игр на ставку.'],
+      ['Откуда берутся реальные призы?', 'От игроков, и это открыто: ставки дуэлей и живых матчей уходят победителю за вычетом комиссии 5%, кубок платит из пула этих комиссий, Free Throw — из половины продаж пачек, розыгрыш сезона — из 30% продаж Pass.'],
+      ['Что-то работает не так. Кому писать?', 'В <a href="https://t.me/meme_jam_support_bot">бота поддержки</a>. Игра в бете, сообщениям об ошибках мы очень рады.'],
+    ],
+    finH: 'Время вбрасывания', finT: 'Обучение займёт две минуты, а первые паки — за наш счёт.',
+    lSupport: 'Поддержка', lVerifier: 'Верификатор розыгрышей', finNote: 'Meme Jam в бете. Числа на этой странице могут настраиваться; актуальные значения и цены всегда показывает сама игра.',
+    your: 'твоя',
+  },
+  ua: {
+    brand: 'ПРАВИЛА', eyebrow: 'Мініапп у Telegram · бета', h1: 'Як <em>грати</em><br>в Meme Jam',
+    lead: 'Картковий мем-баскетбол. Бери карти з корту, збирай із них комбо, проходь захист і набери більше за суперника за чотири чверті.',
+    play: 'Грати в Telegram', tryBtn: 'Спробувати кидок ↓',
+    st1: 'карт: 4 сімейства × 9 рангів і Wild', st2: 'лейнів на корті, у кожному стопка', st3: 'очок за кидок, за розміром комбо', st4: 'чверті, далі овертайм до першого влучання',
+    nav: ['Основи', 'Спробуй', 'Матч', 'Карти', 'Режими', 'Колекція', 'Free Throw', 'Сезон', 'Валюти', 'Чесність', 'FAQ'],
+    k1: 'За 30 секунд', t1: 'Уся гра в чотирьох кроках', s1: 'Гравці ходять по черзі. Кожен хід — один кидок по кільцю.',
+    steps: [
+      ['Візьми карту', "Обери один із п'яти лейнів і візьми верхню карту. Одна карта — це лей-ап на 2 очки."],
+      ['Збери комбо', 'Додай верхні карти того ж сімейства з інших лейнів, по одній з лейна. До 4 карт і 5 очок.'],
+      ['Пройди захист', 'Лава виставляє по захиснику на кожну карту. Захисник того ж сімейства її блокує. Пройшла хоч одна карта — очки твої.'],
+      ['Витягни клатч', 'Заблокували все? Твої власні рідкісні карти кидають шанс клатчу й можуть урятувати кидок.'],
+    ],
+    k2: 'Руками', t2: 'Зроби кілька кидків просто тут', s2: 'Тренувальний корт зі справжніми правилами. Тапни верхню карту, додай карти того ж сімейства з інших лейнів і кидай.',
+    dScore: 'Рахунок', dReset: 'Новий корт', dShoot: 'Кидок',
+    lgOpp: 'червона точка: карта суперника (очки дає, клатч ні)', lgSel: 'бірюзова рамка: можна додати в комбо', lgNote: 'Це тренування: кубики тут локальні. У грі кожен рол рахується із сида матчу на сервері.',
+    dPick: 'Обери карту', dPickHint: 'Тапни верхню карту будь-якого лейна, щоб почати кидок.',
+    dHintMore: 'Підсвічені карти того ж сімейства. Додавай або кидай.', dHintMax: 'Це максимальне комбо. Кидай!', dHintSolo: 'Відповідних карт зверху зараз немає. Кидай або обери іншу.',
+    pts: 'очк.', dOver: 'Корт порожній', dOverHint: 'Фінальна сирена. Роздай новий корт і кидай далі.',
+    rOpen: 'пройшла', rBlk: 'блок', rClutch: 'клатч', rScore: 'Влучив +{n}', rClutchScore: 'Клатч! +{n}', rBlocked: 'Блок',
+    yOpen: 'Одна з карт пройшла свого захисника, тож кидок зараховано повністю.',
+    yClutch: 'Усі карти заблоковано, але твоя {card} вибила клатч {p}% і врятувала кидок.',
+    yBlockedOwn: 'Кожній карті дістався захисник її сімейства (або Ref), і клатч не спрацював.',
+    yBlockedNone: 'Усі карти заблоковано, а кидати клатч не було кому: у звичайних карт 0%, а чужі карти клатчу тобі не дають.',
+    k3: 'Матч', t3: 'Кидки, захист і клатч', s3: "Обидві колоди перемішано в один спільний корт: 45 карт у 5 лейнах, три верхні в кожному відкриті. Кожна карта пам'ятає свого власника.",
+    combo: [['Layup', '1 карта'], ['Three', '2 карти'], ['Alley-oop', '3 карти'], ['Poster', '4 карти']],
+    defH: 'Захист', defT: 'На лаві 18 захисників: по 4 на сімейство і 2 Ref, які блокують будь-кого. На кожну атакувальну карту тягнеться один захисник. Кидок відбито, лише якщо заблоковано <b>всі</b> карти, тому велике комбо проходить частіше.',
+    defBars: ['1 карта', '2 карти', '3 карти', '4 карти'], defNote: 'проходить',
+    clH: 'Клатч', clT: 'Якщо кидок повністю заблоковано, кожна атакувальна карта <b>з твоєї колоди</b> кидає клатч. Спрацював хоч один — кидок зараховано. Це єдине місце, де колекція впливає на результат.',
+    clNote: ['6 · 7 · 8', '9 · 10', 'J · Q', 'K · A · Wild'],
+    facts: [
+      ['Спільний корт', 'Будь-яку верхню карту можна взяти, свою чи чужу. Забирай сильні карти суперника раніше за нього: карта, зіграна тобою, клатчу йому вже не дасть.'],
+      ['Чверті та овертайм', 'Чверть закінчується, коли з корту пішло 11 карт. Матч закінчується, коли корт порожній. Нічия — овертайм: два короткі лейни, гра до першого влучання.'],
+      ['Карти не губляться', 'Зіграні карти йдуть у скид матчу, а не з колекції. Після фінальної сирени обидві колоди рівно такі самі, як до гри.'],
+    ],
+    k4: 'Карти', t4: "Чотири сімейства, дев'ять рангів", s4: 'Сімейство вирішує, що збирається в комбо і хто блокує. Ранг задає рідкісність, а рідкісність — клатч.',
+    fams: { frogs: 'Пепе та компанія. Зелені й спокійні під тиском.', dogs: 'Doge, Cheems і вся зграя. Much dunk, very wow.', wojaks: 'Почуття на корті: від Думера до Чада.', cats: 'Longcat, Grumpy і решта інтернету.' },
+    rar: [['Common', 'без клатчу'], ['Rare', 'клатч 8%'], ['Epic', 'клатч 15%'], ['Legendary', 'клатч 25%']],
+    wildH: 'Wild Meme', wildT: 'Trollface і вся банда rage comics. Wild пасує до <b>будь-якого</b> сімейства в комбо й несе клатч 25%. Приходить із паків, крафту, Free Throw і нагород сезону. У колоді максимум дві.',
+    k5: 'Режими', t5: 'Де грати', s5: 'Боти — для практики й прогресу, живі гравці — для ставок і слави.',
+    modes: [
+      ['🏀', 'Pickup game', 'проти команд-ботів', "П'ять мем-команд від Frog Nation до боса All-Stars. 5 безкоштовних матчів на день, рефіл додає ще 5. Перемоги дають Hype, рейтинг, очки сезону й іноді карту.", ['своя колода', '5 безкоштовно / день'], 'teams'],
+      ['⚡', 'Живий матч', 'PvP у реальному часі', 'Хід за ходом проти живого гравця: підбір за рейтингом, відкрита кімната або приватна за кодом. 15 секунд на хід. Три автоходи поспіль або вихід — поразка.', ['своя колода', 'безкоштовно або ставка', 'без ліміту']],
+      ['🎯', 'Дуель', 'один корт, кращий рахунок', 'Ти й суперник окремо граєте той самий корт проти одного бота. Перемагає більший рахунок, потім менше ходів; повна нічия — повернення. 24 год на прийняття, 24 год на гру.', ['нейтральна колода', 'ставка: Hype · GRAM · USDT', 'комісія 5%']],
+      ['🪜', 'Daily Ladder', 'один корт на всіх', 'Щодня всі гравці отримують той самий корт. Дві спроби (друга за Hype). Топ-10 дня забирає призи в Hype. Скидання о 00:00 UTC.', ['нейтральна колода', 'призи щодня']],
+      ['🏆', 'Weekly Cup', 'плей-оф топ-16', '16 найкращих тижневого топу зустрічаються в неділю о 18:00 UTC. Гра на виліт, 24 год на раунд. Призи: GRAM із пулу комісій дуелей, Hype і паки.', ['нейтральна колода', 'за кваліфікацією', 'призи в GRAM']],
+      ['🎓', 'Навчання', 'перший матч', 'Матч із тренером, який показує кидки, комбо й захист. За проходження — разовий бонус Hype. Повторити можна будь-коли з профілю.', ['4 ходи за сценарієм', 'бонус один раз']],
+    ],
+    neutral: 'У дуелі, драбині й кубку всі грають однією нейтральною колодою з 36 карт, колекція там переваги не дає. І ще одна особливість цих режимів: кожна карта суперника у твоєму комбо коштує на 1 очко менше.',
+    k6: 'Колекція', t6: 'Збери сильнішу колоду', s6: 'Ти стартуєш із 24 картами: ранги від 6 до J кожного сімейства. Дами, Королі, Тузи та Wild чекають, поки ти їх здобудеш.',
+    skinH: 'Скіни додають клатч', skinT: 'Та сама позиція може випасти у скіні Holo або Gold зі своїм артом і бонусом до клатчу. У колоду йде один скін на позицію.',
+    skins: [['Base', 'карта як є'], ['Holo', '+5% клатч'], ['Gold', '+10% клатч']],
+    lvH: 'Дублі качають рівень', lvT: 'Кожен дубль піднімає рівень карти: <b>+2% клатчу за рівень</b>, до +10%. Бонуси скіна й рівня разом не більші за +20% на карту.',
+    crH: 'Clout і крафт', crT: 'За дублі ще нараховується <b>Clout</b>. За нього крафтиться будь-яка потрібна карта, зокрема Wild. Ціна крафту в Clout:',
+    stH: 'Звідки беруться карти', stT: 'Паки, дроп після перемог у Pickup, крафт, Free Throw, тири сезону й подарунки за запрошених друзів. Нова позиція одразу стає в колоду.',
+    pkH: 'Паки',
+    packs: [['Daily', 'Безкоштовно раз на добу', '1 карта'], ['Bronze', 'Гарантія Rare або вище', '3 карти'], ['Silver', 'Гарантія Epic або вище, шанс Wild', '5 карт'], ['Gold', 'Гарантія Legendary, найкращі шанси на Wild і скіни', '8 карт']],
+    gAim: 'Напрямок', gPow: 'Сила',
+    k7: 'Мінігра на кожен день', t7: 'Free Throw', s7: 'Екраном біжать два бігунки: напрямок і сила. Зупини кожен тапом. Що ближче до центру, то чистіший кидок.',
+    outs: [['MISS', 'Hype 20. Пощастить на наступному.'], ['HIT', 'Hype 80, іноді зверху очки сезону.'], ['SWISH', 'Hype 200+, Wild, Bronze-пак або очки сезону.']],
+    ftFreeH: 'Безкоштовні кидки', ftFree: ['<b>3 безкоштовні кидки щодня.</b>', 'Серії дають більше: <b>3 swish поспіль</b> — Bronze-пак, <b>5 поспіль</b> — великий приз у Hype.', 'Грай <b>7 днів поспіль</b> і отримай ще один Bronze-пак.', 'На безкоштовному влучанні зрідка випадає NFT-гіфт з окремого невеликого пулу.'],
+    ftPaidH: 'Куплені кидки: реальні призи', ftPaid: ['Пачки по 5 кидків за Telegram Stars, GRAM або USDT. Кидки не згоряють.', 'Влучання або swish може принести <b>реальні USDT або GRAM</b>, а swish — відбити ціну всієї пачки.', "<b>Гарантія:</b> п'ять куплених кидків поспіль без грошового призу — і наступний його дає.", 'При влучанні випадають <b>NFT-гіфти Telegram</b>. Поточний пул гіфтів видно у грі. Виграний гіфт потрапляє в гаманець: виведи його у свій профіль Telegram або обміняй на кидки.', 'Грошові призи платяться з призового пулу, в який іде <b>50% з кожної проданої пачки</b>.'],
+    k8: 'Кожні 28 днів', t8: 'Season Pass', s8: 'Грай у будь-якому режимі, заробляй очки сезону (SP) і піднімайся 30 тирами нагород.',
+    seTrackH: '30 тирів по 100 SP', seTrackT: 'Безкоштовний ряд дає Hype і паки. <b>Pass</b> подвоює всі зароблені SP і відкриває преміум-ряд: Gold-паки, Wild та ексклюзивний скін на 30-му тирі.',
+    seSpH: 'Звідки беруться SP', sp: [['Перемога в Pickup (перші 5 на день; у матчах рефілу без ліміту)', '+40'], ['Перемога в дуелі або живому матчі', '+80'], ['Матч Weekly Cup', '+150'], ['Топ-10 Daily Ladder', '+100'], ['Free Throw: влучання / swish', '+10 / +25']],
+    seDrawH: 'Розіграш наприкінці сезону', seDrawT: '<b>30% усіх GRAM і USDT</b>, сплачених за Pass, ідуть у фонд сезону. Власники Pass отримують квитки: 1 за сам Pass і по 1 за кожен пройдений тир. Фонд ділять десять переможців:',
+    seExclTag: 'Тир 30 · ексклюзив', seExclH: 'Король сезону', seExclT: 'Золотий Король із бонусом +10% до клатчу. У кожного сезону свій, і більше він не повториться.',
+    k9: 'Економіка', t9: 'Чотири валюти', s9: 'Дві ігрові, одна — реальні гроші, ще одна — просто спосіб оплати.',
+    curs: [
+      ['H', 'Hype', "М'яка валюта. Заробляється в усіх режимах, у Free Throw, завданнях і тирах сезону. Витрачається на дуелі за Hype, другу спробу драбини та квитки розіграшів. Не виводиться."],
+      ['C', 'Clout', 'Картковий пил. Нараховується за кожен дубль. Витрачається на крафт саме тієї карти, якої бракує.'],
+      ['$', 'GRAM і USDT', 'Реальна крипта в мережі TON. Поповни баланс або виграй у дуелях, живих матчах, Weekly Cup, Free Throw, розіграші сезону й розіграшах призів. Став, купуй або виводь на свій гаманець.'],
+      ['★', 'Telegram Stars', 'Лише спосіб оплати: паки, рефіл, пачки кидків і Season Pass. Stars не видаються як нагорода й не зберігаються на балансі.'],
+    ],
+    k10: 'Вірити на слово не треба', t10: 'Чесна гра', s10: 'Рушій матчу — чиста функція: той самий сид і ті самі ходи завжди дають ту саму гру.',
+    fair: [
+      ['01 · Матчі', 'Усе випадкове в матчі, від розкладки до захисників і клатчу, виводиться із <b>сида матчу</b> на сервері. Застосунок надсилає лише твої ходи. На телефоні нічого не ролиться.'],
+      ['02 · Розіграші', 'Переможці залежать від секретного сида, зафіксованого до продажів, і публічного раунду випадковості <b>drand</b>, який з\'являється лише після закриття продажів. Будь-хто може перерахувати розіграш у <a href="' + VERIFIER + '?lang=ua">відкритому верифікаторі</a>.'],
+      ['03 · Розіграш сезону', 'У сид розіграшу сезону підмішано хеш першого <b>блоку блокчейна TON</b> після кінця сезону. Ніхто, включно із самою грою, не знає результату, поки ще можна набирати тири.'],
+    ],
+    t11: 'Короткі відповіді',
+    faq: [
+      ['Чи можу я втратити карти в матчі?', 'Ні. Корт — тимчасова розкладка. Хай що станеться в матчі, колекція й колода лишаються тими самими. Ставка — завжди валюта, ніколи не карти.'],
+      ['Чи можна купити перемогу?', 'Ні. Паки підсилюють клатч, а клатч важливий лише для кидків, які захист заблокував повністю, це приблизно кожен десятий. Бонус карти обмежено +20%. Це помітна перевага, але не гарантія перемоги.'],
+      ['Чому в дуелях колекція не важлива?', 'Дуель, Daily Ladder і Weekly Cup — про рівні умови: обидві сторони грають нейтральною колодою на одному корті. Своя колода грає в Pickup і в живих матчах.'],
+      ['Чи є денний ліміт?', 'Лише на матчі з ботами (Pickup): 5 безкоштовних на день плюс рефіл. Живі матчі й дуелі без ліміту. У драбини свої дві спроби на день.'],
+      ['Що я отримаю за запрошених друзів?', 'Bronze-пак, коли друг зіграє 3 матчі, і Silver-пак після 10, плюс 5% комісій з його ігор на ставку.'],
+      ['Звідки беруться реальні призи?', 'Від гравців, і це відкрито: ставки дуелей і живих матчів ідуть переможцю за вирахуванням комісії 5%, кубок платить із пулу цих комісій, Free Throw — з половини продажів пачок, розіграш сезону — з 30% продажів Pass.'],
+      ['Щось працює не так. Кому писати?', 'У <a href="https://t.me/meme_jam_support_bot">бота підтримки</a>. Гра в беті, повідомленням про помилки ми дуже раді.'],
+    ],
+    finH: 'Час вкидання', finT: 'Навчання займе дві хвилини, а перші паки — нашим коштом.',
+    lSupport: 'Підтримка', lVerifier: 'Верифікатор розіграшів', finNote: 'Meme Jam у беті. Числа на цій сторінці можуть налаштовуватися; актуальні значення й ціни завжди показує сама гра.',
+    your: 'твоя',
+  },
+};
+
+/* ── helpers ── */
+const $ = (id) => document.getElementById(id);
+const qs = new URLSearchParams(location.search);
+if (['light', 'dark'].includes(qs.get('theme'))) document.documentElement.dataset.theme = qs.get('theme');
+const LANGS = { en: 'en', ru: 'ru', ua: 'uk' };
+let lang = (() => {
+  const q = (qs.get('lang') || '').toLowerCase().slice(0, 2);
+  if (q === 'uk') return 'ua';
+  if (I18N[q]) return q;
+  try { const s = localStorage.getItem('mj.rules.lang'); if (I18N[s]) return s; } catch {}
+  return 'en';
+})();
+const t = (k, vars = {}) => String(I18N[lang][k] ?? I18N.en[k] ?? k).replace(/\{(\w+)\}/g, (_, v) => vars[v] ?? '');
+const L = (k) => I18N[lang][k] ?? I18N.en[k];
+
+const RANKS = ['6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+const FAMS = ['frogs', 'dogs', 'wojaks', 'cats'];
+const FAM_NAME = { frogs: 'Frogs', dogs: 'Dogs', wojaks: 'Wojaks', cats: 'Cats' };
+const LETTER = { frogs: 'F', dogs: 'D', wojaks: 'W', cats: 'C' };
+const rarOf = (c) => c.f === 'wild' ? 'legendary' : ['6', '7', '8'].includes(c.r) ? 'common' : ['9', '10'].includes(c.r) ? 'rare' : ['J', 'Q'].includes(c.r) ? 'epic' : 'legendary';
+const CLUTCH = { common: 0, rare: 8, epic: 15, legendary: 25 };
+const fileOf = (c) => c.f === 'wild' ? `wild${c.skin ? '_' + c.skin : ''}` : `${c.f}_${c.r}${c.skin ? '_' + c.skin : ''}`;
+function card(c, cls = '', attrs = '') {
+  const fx = c.skin === 'holo' ? ' holo' : c.skin && c.f !== 'wild' ? ' gold' : '';
+  return `<div class="card ${c.f} ${rarOf(c)}${fx} ${cls}" ${attrs}><img src="./assets/cards/${fileOf(c)}.webp" alt="" loading="lazy" draggable="false">`
+    + (c.f === 'wild' ? '' : `<i class="chip">${LETTER[c.f]}</i>`) + `<b class="rank">${c.f === 'wild' ? '★' : c.r}</b>${c.opp ? '<i class="opp"></i>' : ''}</div>`;
+}
+const cardName = (c) => c.f === 'wild' ? 'Wild' : `${FAM_NAME[c.f]} ${c.r}`;
+
+/* ── static render ── */
+const SECTIONS = ['basics', 'try', 'match', 'cards', 'modes', 'collection', 'throw', 'season', 'money', 'fair', 'faq'];
+const STEP_C = ['var(--teal)', 'var(--frogs)', 'var(--red)', 'var(--yellow)'];
+const MODE_C = ['var(--orange)', 'var(--yellow)', 'var(--red)', 'var(--teal)', 'var(--legendary)', 'var(--frogs)'];
+const PACK_C = ['var(--teal)', '#c98a12', '#c9ced8', '#f5c542'];
+const PACK_F = ['pack_daily', 'pack_bronze', 'pack_silver', 'pack_gold'];
+const TEAMS = ['frog_nation', 'dog_pound', 'wojak_united', 'cat_cartel', 'all_stars'];
+
+function render() {
+  document.documentElement.lang = LANGS[lang];
+  document.title = lang === 'en' ? 'Meme Jam Rulebook' : lang === 'ru' ? 'Meme Jam — правила игры' : 'Meme Jam — правила гри';
+  document.querySelectorAll('[data-t]').forEach((el) => { el.innerHTML = t(el.dataset.t); });
+  document.querySelectorAll('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  $('lVer').href = VERIFIER + (lang === 'en' ? '' : '?lang=' + lang);
+
+  $('toc').innerHTML = L('nav').map((n, i) => `<a href="#${SECTIONS[i]}">${n}</a>`).join('');
+  $('steps').innerHTML = L('steps').map(([h, p], i) => `<div class="panel step rise" data-n="${i + 1}" style="--c:${STEP_C[i]}"><div class="n">${i + 1}</div><h3>${h}</h3><p>${p}</p></div>`).join('');
+
+  const comboCards = [{ f: 'frogs', r: 'K' }, { f: 'frogs', r: '9' }, { f: 'wild' }, { f: 'frogs', r: 'J' }];
+  $('combos').innerHTML = L('combo').map(([nm, sub], i) => `<div class="panel combo"><div class="mini">${comboCards.slice(0, i + 1).map((c) => card(c)).join('')}</div><div class="pts">${i + 2}</div><div class="nm">${nm}</div><small>${sub} · ${i + 2} ${t('pts')}</small></div>`).join('');
+  const pass = [67, 89, 96, 99];
+  $('defBars').innerHTML = L('defBars').map((n, i) => `<div class="barrow" style="--c:var(--teal);--v:${pass[i]}%"><span>${n}</span><div class="track"><i></i></div><em>${pass[i]}%</em></div>`).join('');
+  const rars = ['common', 'rare', 'epic', 'legendary'];
+  $('clBars').innerHTML = rars.map((r, i) => `<div class="barrow" style="--c:var(--${r});--v:${Math.max(CLUTCH[r] * 4, 2)}%"><span>${L('rar')[i][0]}<small>${L('clNote')[i]}</small></span><div class="track"><i></i></div><em>${CLUTCH[r]}%</em></div>`).join('');
+  $('matchFacts').innerHTML = L('facts').map(([h, p]) => `<div class="panel rise"><h3>${h}</h3><p>${p}</p></div>`).join('');
+
+  const famCard = { frogs: 'K', dogs: 'A', wojaks: 'Q', cats: 'J' };
+  $('fams').innerHTML = FAMS.map((f) => `<div class="panel fam rise" style="--c:var(--${f})">${card({ f, r: famCard[f] })}<div><h3>${FAM_NAME[f]}</h3><p>${L('fams')[f]}</p></div></div>`).join('');
+  const groups = [['6', '7', '8'], ['9', '10'], ['J', 'Q'], ['K', 'A']];
+  $('ranks').innerHTML = groups.map((g, i) => `<div class="rk" style="--c:var(--${rars[i]})"><div class="rs">${g.map((r) => `<b>${r}</b>`).join('')}</div><span>${L('rar')[i][0]}</span><small>${L('rar')[i][1]}</small></div>`).join('');
+  $('wilds').innerHTML = card({ f: 'wild' }) + card({ f: 'wild', skin: 'me_gusta' });
+
+  $('modeGrid').innerHTML = L('modes').map(([ic, h, sm, p, tags, extra], i) => `<div class="panel mode rise" style="--c:${MODE_C[i]}"><div class="ic">${ic}</div><h3>${h}<small>${sm}</small></h3><p>${p}</p>`
+    + (extra === 'teams' ? `<div class="teams">${TEAMS.map((x) => `<img src="./assets/teams/${x}.webp" alt="" loading="lazy">`).join('')}</div>` : '')
+    + `<div class="tags">${tags.map((x, j) => `<span class="tag ${j === 0 ? 't' : ''}">${x}</span>`).join('')}</div></div>`).join('')
+    + `<div class="panel rise" style="grid-column:1/-1;border-left:6px solid var(--teal)"><p>${t('neutral')}</p></div>`;
+
+  const sk = [{ f: 'frogs', r: 'J' }, { f: 'frogs', r: 'J', skin: 'holo' }, { f: 'frogs', r: 'J', skin: 'gold' }];
+  $('skins').innerHTML = L('skins').map(([b, s], i) => `<div class="skin">${card(sk[i])}<b>${b}</b><small>${s}</small></div>`).join('');
+  $('packs').innerHTML = L('packs').map(([h, p, n], i) => `<div class="panel pack rise" style="--c:${PACK_C[i]}"><img src="./assets/packs/${PACK_F[i]}.webp" alt="${h} pack" loading="lazy"><h3>${h}</h3><p>${p}</p><div class="tags" style="justify-content:center"><span class="tag">${n}</span></div></div>`).join('');
+
+  const outC = ['#c9b8dc', 'var(--teal)', 'var(--yellow)'];
+  $('outs').innerHTML = L('outs').map(([b, s], i) => `<div class="out" style="--c:${outC[i]}"><b>${b}</b><span>${s}</span></div>`).join('');
+  $('ftFree').innerHTML = L('ftFree').map((x) => `<li><span>${x}</span></li>`).join('');
+  $('ftPaid').innerHTML = L('ftPaid').map((x) => `<li><span>${x}</span></li>`).join('');
+
+  $('track30').innerHTML = Array.from({ length: 30 }, (_, i) => `<i class="${i < 6 ? 'on' : ''}">${i + 1}</i>`).join('');
+  $('spTable').innerHTML = L('sp').map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('');
+  $('exclCard').innerHTML = card({ f: 'frogs', r: 'K', skin: 's1_hoop_dreams' });
+
+  const curC = ['var(--orange)', 'var(--epic)', 'var(--teal)', 'var(--yellow)'];
+  $('curs').innerHTML = L('curs').map(([d, h, p], i) => `<div class="panel cur rise" style="--c:${curC[i]}"><div class="hd"><div class="dot">${d}</div><h3>${h}</h3></div><p>${p}</p></div>`).join('');
+  $('fairGrid').innerHTML = L('fair').map(([n, p]) => `<div class="panel fair rise"><span class="num">${n}</span><p>${p}</p></div>`).join('');
+  $('faqList').innerHTML = L('faq').map(([q, a]) => `<details class="q"><summary>${q}</summary><p>${a}</p></details>`).join('');
+
+  observe();
+  drawDemo();
+}
+
+$('fan').innerHTML = [{ f: 'cats', r: 'Q' }, { f: 'dogs', r: 'A' }, { f: 'wild' }, { f: 'frogs', r: 'K' }, { f: 'wojaks', r: 'J' }].map((c) => card(c)).join('')
+  + '<svg class="ballfx" viewBox="-30 -30 60 60"><circle r="26" fill="#ff7a1a" stroke="#140a1f" stroke-width="4"/><path d="M-26 0h52M0-26v52M-18-18c10 10 10 26 0 36M18-18c-10 10-10 26 0 36" stroke="#140a1f" stroke-width="3" fill="none"/></svg>';
+
+/* ── reveal on scroll + active nav chip ── */
+let io;
+function observe() {
+  io?.disconnect();
+  io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rise').forEach((el) => io.observe(el));
+}
+const navIo = new IntersectionObserver((es) => es.forEach((e) => {
+  if (!e.isIntersecting) return;
+  document.querySelectorAll('#toc a').forEach((a) => {
+    const on = a.getAttribute('href') === '#' + e.target.id;
+    a.classList.toggle('on', on);
+    if (on) { const bar = $('toc'); bar.scrollTo({ left: a.offsetLeft - bar.clientWidth / 2 + a.clientWidth / 2, behavior: 'smooth' }); }
+  });
+}), { rootMargin: '-35% 0px -60% 0px' });
+SECTIONS.forEach((id) => navIo.observe($(id)));
+
+/* ── practice court ── */
+const POS = ['SG', 'PF', 'PG', 'C', 'SF'];
+const SHOTS = ['', 'Layup', 'Three', 'Alley-oop', 'Poster'];
+const demo = { lanes: [], sel: [], score: 0, taken: 0, bench: [], out: null, fresh: true };
+const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function deal() {
+  const pool = [];
+  for (const f of FAMS) for (const r of RANKS) { pool.push({ f, r }); pool.push({ f, r, opp: true }); }
+  pool.push({ f: 'wild' }, { f: 'wild', skin: 'me_gusta' });
+  const cards = shuffle(pool).slice(0, 45);
+  demo.lanes = [0, 1, 2, 3, 4].map((i) => cards.slice(i * 9, i * 9 + 9));
+  Object.assign(demo, { sel: [], score: 0, taken: 0, bench: [], out: null, fresh: true });
+}
+function drawBench(n) {
+  if (demo.bench.length < n) { demo.bench = shuffle([...FAMS.flatMap((f) => [f, f, f, f]), 'ref', 'ref']); }
+  return demo.bench.splice(0, n);
+}
+const topOf = (i) => demo.lanes[i][0];
+const comboFam = () => demo.sel.map(topOf).find((c) => c.f !== 'wild')?.f ?? null;
+const fits = (i) => { const c = topOf(i); const f = comboFam(); return !!c && !demo.sel.includes(i) && demo.sel.length < 4 && (c.f === 'wild' || !f || c.f === f); };
+
+function drawDemo() {
+  const left = demo.lanes.reduce((s, l) => s + l.length, 0);
+  $('dScore').textContent = demo.score;
+  const q = Math.min(4, Math.floor(demo.taken / 11) + 1);
+  $('dQ').innerHTML = [1, 2, 3, 4].map((n) => `<i><s style="width:${n < q ? 100 : n > q ? 0 : left ? ((demo.taken - (q - 1) * 11) / (q === 4 ? 12 : 11)) * 100 : 100}%"></s></i>`).join('') + `<span>Q${q}</span>`;
+  $('lanes').innerHTML = demo.lanes.map((lane, i) => {
+    const sel = demo.sel.includes(i);
+    const st = !lane.length ? '' : sel ? 'sel' : demo.sel.length ? (fits(i) ? 'ok' : 'no') : '';
+    return `<div class="lane"><span class="pos">${POS[i]}</span><div class="stack">`
+      + (lane.length ? '' : '<div class="empty"></div>')
+      + (lane[2] ? card(lane[2], 'p2') : '') + (lane[1] ? card(lane[1], 'p1') : '')
+      + (lane[0] ? card(lane[0], `top ${st} ${demo.fresh ? 'in' : ''}`, `data-lane="${i}" role="button" tabindex="0" aria-label="${cardName(lane[0])}" style="animation-delay:${i * 60}ms"`) : '')
+      + `</div><span class="left">×${lane.length}</span></div>`;
+  }).join('');
+  demo.fresh = false;
+  const n = demo.sel.length;
+  $('dShoot').disabled = !n;
+  if (!left) { $('dShot').textContent = t('dOver'); $('dHint').textContent = t('dOverHint'); }
+  else if (!n) { $('dShot').textContent = t('dPick'); $('dHint').textContent = t('dPickHint'); }
+  else {
+    $('dShot').textContent = `${SHOTS[n]} · ${n + 1} ${t('pts')}`;
+    const more = [0, 1, 2, 3, 4].some(fits);
+    $('dHint').textContent = n === 4 ? t('dHintMax') : more ? t('dHintMore') : n === 1 ? t('dHintSolo') : t('dHintMax');
+  }
+  renderOut();
+}
+function renderOut() {
+  const o = demo.out;
+  if (!o) { $('dOut').innerHTML = ''; return; }
+  const pairs = o.rows.map((r, i) => `<div class="pair" style="animation-delay:${i * 90}ms">${card(r.c)}<span class="vs">VS</span>`
+    + `<div class="def ${r.d === 'ref' ? 'ref' : ''}" style="--fc:var(--${r.d === 'ref' ? 'yellow' : r.d})">${r.d === 'ref' ? 'REF' : `<i>${LETTER[r.d]}</i>DEF`}</div>`
+    + `<span class="res ${r.clutch ? 'cl' : r.blocked ? 'blk' : 'open'}">${r.clutch ? t('rClutch') : r.blocked ? t('rBlk') : t('rOpen')}</span></div>`).join('');
+  const stamp = o.kind === 'open' ? `<span class="stamp good">${t('rScore', { n: o.pts })}</span>` : o.kind === 'clutch' ? `<span class="stamp clutch">${t('rClutchScore', { n: o.pts })}</span>` : `<span class="stamp bad">${t('rBlocked')}</span>`;
+  const why = o.kind === 'open' ? t('yOpen') : o.kind === 'clutch' ? t('yClutch', { card: cardName(o.hero), p: CLUTCH[rarOf(o.hero)] }) : o.canClutch ? t('yBlockedOwn') : t('yBlockedNone');
+  $('dOut').innerHTML = `<div class="duels">${pairs}</div>${stamp}<p class="why">${why}</p>`;
+}
+function tapLane(i) {
+  if (!topOf(i)) return;
+  demo.out = null;
+  if (demo.sel.includes(i)) demo.sel = demo.sel[0] === i ? [] : demo.sel.filter((x) => x !== i);
+  else if (fits(i)) demo.sel.push(i);
+  else demo.sel = [i];
+  drawDemo();
+}
+function shoot() {
+  const n = demo.sel.length;
+  if (!n) return;
+  const defs = drawBench(n);
+  const rows = demo.sel.map((i, k) => { const c = topOf(i); return { c, d: defs[k], blocked: defs[k] === 'ref' || defs[k] === c.f || false }; });
+  rows.forEach((r) => { if (r.c.f === 'wild' && r.d !== 'ref') r.blocked = r.d === comboFam(); });
+  let kind = rows.some((r) => !r.blocked) ? 'open' : 'blocked';
+  let hero = null;
+  const own = rows.filter((r) => !r.c.opp && CLUTCH[rarOf(r.c)] > 0);
+  if (kind === 'blocked') for (const r of own) if (Math.random() * 100 < CLUTCH[rarOf(r.c)]) { r.clutch = true; hero = r.c; kind = 'clutch'; break; }
+  const pts = n + 1;
+  if (kind !== 'blocked') demo.score += pts;
+  demo.out = { rows, kind, pts, hero, canClutch: own.length > 0 };
+  demo.sel.forEach((i) => demo.lanes[i].shift());
+  demo.taken += n;
+  demo.sel = [];
+  drawDemo();
+}
+$('lanes').addEventListener('click', (e) => { const el = e.target.closest('[data-lane]'); if (el) tapLane(+el.dataset.lane); });
+$('lanes').addEventListener('keydown', (e) => { const el = e.target.closest('[data-lane]'); if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); tapLane(+el.dataset.lane); } });
+$('dShoot').addEventListener('click', shoot);
+$('dReset').addEventListener('click', () => { deal(); drawDemo(); });
+
+document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => {
+  lang = b.dataset.lang;
+  try { localStorage.setItem('mj.rules.lang', lang); } catch {}
+  const url = new URL(location.href);
+  url.searchParams.set('lang', lang);
+  history.replaceState(null, '', url);
+  render();
+}));
+
+deal();
+render();
+</script>
+</body>
+</html>
