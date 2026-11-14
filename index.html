@@ -120,13 +120,22 @@
   .btn:disabled { opacity: .45; cursor: default; transform: none; }
 
   .fan { position: relative; width: 380px; height: 300px; flex: none; }
-  .fan .card { --w: 150px; position: absolute; left: 50%; bottom: 14px; margin-left: -75px; transform-origin: 50% 100%; box-shadow: 0 12px 0 rgba(20,10,31,.28); animation: fanIn .9s var(--spring) both; transform: translate(var(--x), var(--y)) rotate(var(--rot)); }
+  /* a hand of cards: JS springs drive the pose; --k = lift 0..1, --dim = pushed aside, --mx/--my = pointer on the card */
+  .fan .card { --w: 150px; --k: 0; --dim: 0; --mx: 50%; --my: 50%; --glow: color-mix(in srgb, var(--rc) 60%, transparent);
+    position: absolute; left: 50%; bottom: 14px; margin-left: -75px; transform-origin: 50% 100%; transition: none; will-change: transform;
+    animation: fanIn .9s var(--spring) both; transform: translate(var(--x), var(--y)) rotate(var(--rot));
+    box-shadow: 0 calc(12px + 18px * var(--k)) calc(36px * var(--k)) calc(-6px * var(--k)) rgba(20,10,31, calc(.28 + .3 * var(--k))), 0 0 calc(40px * var(--k)) calc(-3px + 3px * var(--k)) var(--glow);
+    filter: brightness(calc(1 - .12 * var(--dim))); }
+  .fan .card.wild { --glow: rgba(255,95,176,.6); }
   .fan .card:nth-child(1) { --x: -112px; --y: 16px; --rot: -18deg; animation-delay: .05s; } .fan .card:nth-child(2) { --x: -58px; --y: 2px; --rot: -9deg; animation-delay: .12s; z-index: 1; }
   .fan .card:nth-child(3) { --x: 0px; --y: -6px; --rot: 0deg; animation-delay: .19s; z-index: 2; } .fan .card:nth-child(4) { --x: 58px; --y: 2px; --rot: 9deg; animation-delay: .26s; z-index: 1; }
   .fan .card:nth-child(5) { --x: 112px; --y: 16px; --rot: 18deg; animation-delay: .33s; }
-  .fan .card:hover { transform: translate(var(--x), calc(var(--y) - 18px)) rotate(var(--rot)); z-index: 3; }
+  .fan .card .fx, .fan .card .foil { position: absolute; inset: 0; pointer-events: none; }
+  .fan .card .fx { background: radial-gradient(farthest-corner circle at var(--mx) var(--my), rgba(255,255,255,.9) 6%, rgba(255,255,255,.5) 24%, rgba(0,0,0,.42) 95%); mix-blend-mode: overlay; opacity: calc(var(--k) * .6); }
+  .fan .card .foil { --p: calc((var(--mx) + var(--my)) / 2); background: repeating-linear-gradient(112deg, #ff5fb0 0%, #ffd23f 9%, #3ddc84 18%, #2ee6d6 27%, #7b6cff 36%, #ff5fb0 45%); background-size: 340% 340%; background-position: var(--mx) var(--my); mix-blend-mode: overlay; opacity: calc(var(--k) * .55);
+    -webkit-mask-image: linear-gradient(112deg, transparent calc(var(--p) - 34%), #000 var(--p), transparent calc(var(--p) + 34%)); mask-image: linear-gradient(112deg, transparent calc(var(--p) - 34%), #000 var(--p), transparent calc(var(--p) + 34%)); }
   @keyframes fanIn { from { transform: translateY(60px) scale(.6); opacity: 0; } }
-  .ballfx { position: absolute; right: -8px; top: -6px; width: 74px; height: 74px; animation: bob 4s ease-in-out infinite; filter: drop-shadow(0 8px 0 rgba(20,10,31,.3)); z-index: 4; }
+  .ballfx { position: absolute; right: -8px; top: -6px; width: 74px; height: 74px; animation: bob 4s ease-in-out infinite; filter: drop-shadow(0 8px 0 rgba(20,10,31,.3)); z-index: 8; pointer-events: none; }
   @keyframes bob { 50% { transform: translateY(-12px) rotate(18deg); } }
 
   /* ── stat strip + nav ── */
@@ -936,6 +945,109 @@ function render() {
 
 $('fan').innerHTML = [{ f: 'cats', r: 'Q' }, { f: 'dogs', r: 'A' }, { f: 'wild' }, { f: 'frogs', r: 'K' }, { f: 'wojaks', r: 'J' }].map((c) => card(c)).join('')
   + '<svg class="ballfx" viewBox="-30 -30 60 60"><circle r="26" fill="#ff7a1a" stroke="#140a1f" stroke-width="4"/><path d="M-26 0h52M0-26v52M-18-18c10 10 10 26 0 36M18-18c-10 10-10 26 0 36" stroke="#140a1f" stroke-width="3" fill="none"/></svg>';
+
+/* ── hero fan: a hand of cards on springs. The hovered card rises and straightens, neighbours part,
+   the card tilts in 3D toward the pointer and a glare follows it. Hit zones come from the REST layout,
+   never from the animated one, so a moving card cannot slide out from under the pointer and flicker. ── */
+(() => {
+  const fan = $('fan'), els = [...fan.querySelectorAll('.card')];
+  els.forEach((el) => el.insertAdjacentHTML('beforeend', (el.classList.contains('legendary') ? '<i class="foil"></i>' : '') + '<i class="fx"></i>'));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ORDER = [2, 1, 3, 0, 4];                                   // rest stacking, top card first
+  const SPRING = { x: [230, 21], y: [230, 21], rot: [230, 21], s: [230, 21], rx: [190, 20], ry: [190, 20], k: [200, 28], dim: [150, 25], mx: [260, 32], my: [260, 32] };
+  const PROPS = Object.keys(SPRING);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  let W = 150, H = 210, PX = 190, PY = 286, rest = [], active = -1, ptr = { u: .5, v: .5 }, lastXY = null, seen = true, raf = 0, last = 0, hold = 0;
+  const st = [], vel = [];
+
+  function measure() {
+    W = els[0].offsetWidth; H = els[0].offsetHeight; PX = els[0].offsetLeft + W / 2; PY = els[0].offsetTop + H;
+    rest = els.map((el) => { const cs = getComputedStyle(el); return { x: parseFloat(cs.getPropertyValue('--x')), y: parseFloat(cs.getPropertyValue('--y')), rot: parseFloat(cs.getPropertyValue('--rot')), s: 1 }; });
+  }
+  // the card is pulled out of the hand along its own axis; an edge card also slides outward, so it does not bury its neighbour
+  const MID = (els.length - 1) / 2, isEdge = (i) => i === 0 || i === els.length - 1;
+  const lifted = (i) => { const r = rest[i], a = r.rot * Math.PI / 180, L = W * .25, e = (i - MID) / MID; return { x: r.x + Math.sin(a) * L + e * Math.abs(e) * W * .12, y: r.y - Math.cos(a) * L, rot: r.rot * .3, s: 1.1 }; };
+  const PUSH = [0, .2, .2, .26, .3], PUSH_EDGE = [0, .1, .34, .4, .44];   // × card width, by distance from the lifted card: the hand opens up
+  function target(i) {
+    const r = rest[i];
+    if (active < 0) return { ...r, rx: 0, ry: 0, k: 0, dim: 0, mx: 50, my: 50 };
+    if (i === active) return { ...lifted(i), rx: reduce ? 0 : (ptr.v - .5) * 20, ry: reduce ? 0 : (.5 - ptr.u) * 24, k: 1, dim: 0, mx: ptr.u * 100, my: ptr.v * 100 };
+    const d = i - active, n = Math.abs(d), dir = Math.sign(d);
+    return { x: r.x + dir * W * (isEdge(active) ? PUSH_EDGE : PUSH)[n], y: r.y + W * .03, rot: r.rot + dir * (n === 1 ? 3.5 : 2), s: .98, rx: 0, ry: 0, k: 0, dim: 1, mx: 50, my: 50 };
+  }
+  // pointer (fan coords) → card-local 0..1 for a given pose; the pose pivots on the card's bottom centre
+  function local(pose, px, py) {
+    const dx = px - PX - pose.x, dy = py - PY - pose.y, a = -pose.rot * Math.PI / 180;
+    return { u: (dx * Math.cos(a) - dy * Math.sin(a)) / (W * pose.s) + .5, v: 1 + (dx * Math.sin(a) + dy * Math.cos(a)) / (H * pose.s) };
+  }
+  function hit(px, py) {
+    for (const i of ORDER) {
+      const { u, v } = local(rest[i], px, py), inset = i === 2 ? .15 : 0;   // the top card gives its edges to the neighbours
+      if (u >= inset && u <= 1 - inset && v >= -.25 && v <= 1.03) return i;
+    }
+    return -1;
+  }
+  function point(cx, cy) {
+    const b = fan.getBoundingClientRect(), px = cx - b.left, py = cy - b.top;
+    let h = hit(px, py);
+    if (active >= 0 && h !== active) {                              // a little stickiness at zone borders
+      const pull = Math.sign(PX + rest[active].x - px) * W * .07;
+      if (hit(px + pull, py) === active || hit(px, py + W * .07) === active) h = active;
+    }
+    active = h;
+    if (h >= 0) { const l = local(lifted(h), px, py); ptr = { u: clamp(l.u, 0, 1), v: clamp(l.v, 0, 1) }; }
+    kick();
+  }
+  function release() { active = -1; lastXY = null; kick(); }
+
+  function paint(el, i, s, t) {
+    const k = clamp(s.k, 0, 1), calm = reduce ? 0 : (1 - k) * (1 - .5 * clamp(s.dim, 0, 1));
+    const y = s.y + Math.sin(t * 1.15 + i * 1.3) * W * .016 * calm, rot = s.rot + Math.sin(t * .8 + i * .9) * .7 * calm;
+    const tilt = Math.abs(s.rx) > .03 || Math.abs(s.ry) > .03;
+    el.style.transform = `translate3d(${s.x.toFixed(2)}px,${y.toFixed(2)}px,0) rotate(${rot.toFixed(3)}deg) scale(${s.s.toFixed(4)})`
+      + (tilt ? ` translateY(-50%) perspective(${W * 5}px) rotateX(${s.rx.toFixed(2)}deg) rotateY(${s.ry.toFixed(2)}deg) translateY(50%)` : '');
+    el.style.setProperty('--k', k.toFixed(3));
+    el.style.setProperty('--dim', clamp(s.dim, 0, 1).toFixed(3));
+    el.style.setProperty('--mx', s.mx.toFixed(1) + '%');
+    el.style.setProperty('--my', s.my.toFixed(1) + '%');
+    el.style.zIndex = i === active ? 6 : k > .3 ? 5 : '';
+  }
+  function frame(now) {
+    raf = 0;
+    const dt = Math.min(.034, (now - last) / 1000); last = now;
+    let moving = false;
+    els.forEach((el, i) => {
+      const tg = target(i), s = st[i], v = vel[i];
+      for (const p of PROPS) {
+        if (reduce) { s[p] = tg[p]; continue; }
+        v[p] += ((tg[p] - s[p]) * SPRING[p][0] - v[p] * SPRING[p][1]) * dt; s[p] += v[p] * dt;
+        if (Math.abs(v[p]) > .02 || Math.abs(tg[p] - s[p]) > .02) moving = true;
+      }
+      paint(el, i, s, now / 1000);
+    });
+    if (seen && (moving || !reduce)) raf = requestAnimationFrame(frame);   // idle float keeps the loop alive while on screen
+  }
+  function kick() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } }
+
+  measure();
+  rest.forEach((r) => { st.push({ ...r, rx: 0, ry: 0, k: 0, dim: 0, mx: 50, my: 50 }); vel.push(Object.fromEntries(PROPS.map((p) => [p, 0]))); });
+  addEventListener('resize', () => { measure(); kick(); });
+  addEventListener('pointermove', (e) => {
+    clearTimeout(hold);
+    if (e.pointerType === 'mouse') lastXY = [e.clientX, e.clientY]; else hold = setTimeout(release, 2400);
+    point(e.clientX, e.clientY);
+  }, { passive: true });
+  addEventListener('pointerdown', (e) => {                          // touch: tap a card to lift it, tap elsewhere to drop
+    if (e.pointerType === 'mouse') return;
+    clearTimeout(hold); point(e.clientX, e.clientY);
+    if (active >= 0) hold = setTimeout(release, 2400);
+  }, { passive: true });
+  addEventListener('scroll', () => { if (lastXY) point(lastXY[0], lastXY[1]); }, { passive: true });
+  document.documentElement.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') release(); });   // a lifted finger also fires pointerleave
+  addEventListener('blur', release);
+  new IntersectionObserver((es) => { seen = es[0].isIntersecting; if (seen) kick(); }).observe(fan);
+  kick();
+})();
 
 /* ── reveal on scroll + active nav chip ── */
 let io;
