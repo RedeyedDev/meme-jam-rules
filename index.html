@@ -151,6 +151,7 @@
 
   /* ── sections ── */
   section { padding-top: 54px; }
+  #rating { scroll-margin-top: 64px; }
   .kicker { display: inline-block; padding: 5px 10px; border-radius: 10px; background: var(--hot); color: var(--cream); font: 800 11px/1 var(--display); letter-spacing: 1.5px; text-transform: uppercase; }
   h2 { margin: 12px 0 8px; font: 800 clamp(28px, 5.4vw, 44px)/1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
   .sub { margin: 0 0 20px; max-width: 680px; color: var(--muted); font-size: 15.5px; }
@@ -472,6 +473,10 @@
     <h2 data-t="t5"></h2>
     <p class="sub" data-t="s5"></p>
     <div class="grid g3" id="modeGrid"></div>
+    <div class="grid g2" id="rating" style="margin-top:12px">
+      <div class="panel rise" style="border-left:6px solid var(--teal)"><h3 data-t="rtH"></h3><p data-t="rtT"></p><table class="sp" id="rtTable"></table></div>
+      <div class="panel rise" style="border-left:6px solid var(--yellow)"><h3 data-t="tpH"></h3><p data-t="tpT"></p><table class="sp" id="tpTable"></table></div>
+    </div>
   </section>
 
   <section id="collection">
@@ -619,6 +624,10 @@ const I18N = {
       ['🏆', 'Weekly Cup', 'top 16 playoff', 'The 16 best of the weekly leaderboard meet on Sunday 18:00 UTC. Single elimination, 24 h per round. Prizes: GRAM from the duel fee pool, Hype and packs.', ['neutral deck', 'by qualification', 'GRAM prizes']],
       ['🎓', 'Tutorial', 'first match', 'A guided match with a coach who shows shots, combos and defense. Finishing it pays a one-time Hype bonus. Replay it any time from your profile.', ['4 scripted moves', 'bonus once']],
     ],
+    rtH: 'Rating', rtT: 'Your skill number. It shows next to your name, and Live matchmaking uses it to find an opponent of similar strength. It changes only in <b>Pickup games</b> and <b>Live matches</b>, by the same amount whoever the opponent is. Duels, Daily Ladder, Weekly Cup and Free Throw leave it alone.',
+    rt: [['Every new player starts at', '1000'], ['Win', '+18'], ['Loss', '−9']],
+    tpH: 'Top points', tpT: 'A separate score that decides your place in the <b>Top</b>. It comes from the same wins and never goes down. The Top has an all-time table and a weekly one that starts from zero every week. The 16 best of the week qualify for the Weekly Cup.',
+    tp: [['Win in a Pickup game or Live match', '+18'], ['Loss', '0']],
     neutral: 'In Duel, Ladder and Cup everyone plays the same neutral 36-card deck, so the collection gives no edge there. One more twist in these modes: each opponent card in your combo costs 1 point.',
     k6: 'Collection', t6: 'Build a better deck', s6: 'You start with 24 cards: ranks 6 to J of every family. Queens, Kings, Aces and Wilds are out there to find.',
     skinH: 'Skins add clutch', skinT: 'The same position can drop as a Holo or Gold skin with its own art and a clutch bonus. One skin per position goes into the deck.',
@@ -713,6 +722,10 @@ const I18N = {
       ['🏆', 'Weekly Cup', 'плей-офф топ-16', '16 лучших недельного топа встречаются в воскресенье в 18:00 UTC. Игра на вылет, 24 ч на раунд. Призы: GRAM из пула комиссий дуэлей, Hype и паки.', ['нейтральная колода', 'по квалификации', 'призы в GRAM']],
       ['🎓', 'Обучение', 'первый матч', 'Матч с тренером, который показывает броски, комбо и защиту. За прохождение — разовый бонус Hype. Повторить можно в любой момент из профиля.', ['4 хода по сценарию', 'бонус один раз']],
     ],
+    rtH: 'Рейтинг', rtT: 'Число твоей силы. Оно стоит рядом с именем, и по нему живой матч подбирает соперника близкого уровня. Меняется только в <b>матчах на районе</b> и <b>живых матчах</b>, одинаково при любом сопернике. Дуэли, Daily Ladder, Weekly Cup и Free Throw его не трогают.',
+    rt: [['Каждый новый игрок начинает с', '1000'], ['Победа', '+18'], ['Поражение', '−9']],
+    tpH: 'Очки Топа', tpT: 'Отдельный счёт, по которому считается место в <b>Топе</b>. Начисляется за те же победы и никогда не уменьшается. В Топе две таблицы: за всё время и недельная, она каждую неделю начинается с нуля. 16 лучших недели проходят в Weekly Cup.',
+    tp: [['Победа в матче на районе или живом матче', '+18'], ['Поражение', '0']],
     neutral: 'В дуэли, лестнице и кубке все играют одной нейтральной колодой из 36 карт, коллекция там преимущества не даёт. И ещё одна особенность этих режимов: каждая карта соперника в твоём комбо стоит на 1 очко меньше.',
     k6: 'Коллекция', t6: 'Собери колоду сильнее', s6: 'Ты стартуешь с 24 картами: ранги от 6 до J каждого семейства. Дамы, Короли, Тузы и Wild ждут, когда ты их добудешь.',
     skinH: 'Скины добавляют клатч', skinT: 'Та же позиция может выпасть в скине Holo или Gold со своим артом и бонусом к клатчу. В колоду идёт один скин на позицию.',
@@ -807,6 +820,10 @@ const I18N = {
       ['🏆', 'Weekly Cup', 'плей-оф топ-16', '16 найкращих тижневого топу зустрічаються в неділю о 18:00 UTC. Гра на виліт, 24 год на раунд. Призи: GRAM із пулу комісій дуелей, Hype і паки.', ['нейтральна колода', 'за кваліфікацією', 'призи в GRAM']],
       ['🎓', 'Навчання', 'перший матч', 'Матч із тренером, який показує кидки, комбо й захист. За проходження — разовий бонус Hype. Повторити можна будь-коли з профілю.', ['4 ходи за сценарієм', 'бонус один раз']],
     ],
+    rtH: 'Рейтинг', rtT: 'Число твоєї сили. Воно стоїть поруч з іменем, і за ним живий матч добирає суперника близького рівня. Змінюється лише в <b>матчах на районі</b> та <b>живих матчах</b>, однаково за будь-якого суперника. Дуелі, Daily Ladder, Weekly Cup і Free Throw його не чіпають.',
+    rt: [['Кожен новий гравець починає з', '1000'], ['Перемога', '+18'], ['Поразка', '−9']],
+    tpH: 'Очки Топу', tpT: 'Окремий рахунок, за яким рахується місце в <b>Топі</b>. Нараховується за ті самі перемоги й ніколи не зменшується. У Топі дві таблиці: за весь час і тижнева, вона щотижня починається з нуля. 16 найкращих тижня проходять у Weekly Cup.',
+    tp: [['Перемога в матчі на районі або живому матчі', '+18'], ['Поразка', '0']],
     neutral: 'У дуелі, драбині й кубку всі грають однією нейтральною колодою з 36 карт, колекція там переваги не дає. І ще одна особливість цих режимів: кожна карта суперника у твоєму комбо коштує на 1 очко менше.',
     k6: 'Колекція', t6: 'Збери сильнішу колоду', s6: 'Ти стартуєш із 24 картами: ранги від 6 до J кожного сімейства. Дами, Королі, Тузи та Wild чекають, поки ти їх здобудеш.',
     skinH: 'Скіни додають клатч', skinT: 'Та сама позиція може випасти у скіні Holo або Gold зі своїм артом і бонусом до клатчу. У колоду йде один скін на позицію.',
@@ -931,6 +948,8 @@ function render() {
   $('ftPaid').innerHTML = L('ftPaid').map((x) => `<li><span>${x}</span></li>`).join('');
 
   $('track30').innerHTML = Array.from({ length: 30 }, (_, i) => `<i class="${i < 6 ? 'on' : ''}">${i + 1}</i>`).join('');
+  $('rtTable').innerHTML = L('rt').map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('');
+  $('tpTable').innerHTML = L('tp').map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('');
   $('spTable').innerHTML = L('sp').map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('');
   $('exclCard').innerHTML = card({ f: 'frogs', r: 'K', skin: 's1_hoop_dreams' });
 
@@ -1165,6 +1184,8 @@ document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('cli
 
 deal();
 render();
+// Диплинк из игры (#rating): картинки выше догружаются и сдвигают вёрстку — после load доводим якорь.
+if (location.hash.length > 1) addEventListener('load', () => document.getElementById(location.hash.slice(1))?.scrollIntoView());
 </script>
 </body>
 </html>
