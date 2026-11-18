@@ -619,9 +619,9 @@ const I18N = {
     modes: [
       ['🏀', 'Pickup game', 'vs bot teams', 'Five meme teams from Frog Nation to the All-Stars boss. 5 free matches a day; a refill adds 5 more. Wins pay Hype, rating, season points and sometimes a card.', ['your deck', '5 free / day'], 'teams'],
       ['⚡', 'Live match', 'real-time PvP', 'Turn by turn against a real player: matchmaking by rating, an open room, or a private room by code. 15 seconds per move. Three auto-moves in a row or leaving is a forfeit.', ['your deck', 'free or stake', 'no daily limit']],
-      ['🎯', 'Duel', 'same court, best score', 'You and a rival each play the same court against the same bot. Higher score wins, then fewer moves; a full tie is refunded. 24 h to accept, 24 h to play.', ['neutral deck', 'stake: Hype · GRAM · USDT', 'fee 5%']],
+      ['🎯', 'Duel', 'your own court, best score', 'You and a rival each play your own court against the same bot. Higher score wins, then fewer moves; a full tie is refunded. 24 h to accept, 24 h to play.', ['neutral deck', 'stake: Hype · GRAM · USDT', 'fee 5%']],
       ['🪜', 'Daily Ladder', 'one court for everyone', 'Every day all players get the same court. Two attempts (the second costs Hype). The top 10 of the day take Hype prizes. Resets at 00:00 UTC.', ['neutral deck', 'daily prizes']],
-      ['🏆', 'Weekly Cup', 'top 16 playoff', 'The 16 best of the weekly leaderboard meet on Sunday 18:00 UTC. Single elimination, 24 h per round. Prizes: GRAM from the duel fee pool, Hype and packs.', ['neutral deck', 'by qualification', 'GRAM prizes']],
+      ['🏆', 'Weekly Cup', 'top 16 playoff', 'The 16 best of the weekly leaderboard meet on Sunday 18:00 UTC. Single elimination, 24 h per round, each side plays its own court like in a duel. Prizes: GRAM from the duel fee pool, Hype and packs.', ['neutral deck', 'by qualification', 'GRAM prizes']],
       ['🎓', 'Tutorial', 'first match', 'A guided match with a coach who shows shots, combos and defense. Finishing it pays a one-time Hype bonus. Replay it any time from your profile.', ['4 scripted moves', 'bonus once']],
     ],
     rtH: 'Rating', rtT: 'Your skill number. It shows next to your name, and Live matchmaking uses it to find an opponent of similar strength. It changes only in <b>Pickup games</b> and <b>Live matches</b>, by the same amount whoever the opponent is. Duels, Daily Ladder, Weekly Cup and Free Throw leave it alone.',
@@ -664,7 +664,7 @@ const I18N = {
     faq: [
       ['Can I lose my cards in a match?', 'No. The court is a temporary layout. Whatever happens in a match, your collection and deck stay the same. Stakes are always currency, never cards.'],
       ['Can I buy a win?', 'No. Packs improve clutch, and clutch only matters for shots the defense fully blocked, roughly one in ten. The bonus per card is capped at +20%. It is an edge you can see, not a guaranteed win.'],
-      ['Why does my collection not matter in duels?', 'Duel, Daily Ladder and Weekly Cup are about equal conditions: both sides play a neutral deck on the same court. Your own deck plays in matches against bots and in live matches.'],
+      ['Why does my collection not matter in duels?', 'Duel, Daily Ladder and Weekly Cup are about equal conditions: everyone plays the same neutral deck against the same bot. In a duel and in the cup each side gets its own court, in the ladder the court is the same for everyone. Your own deck plays in matches against bots and in live matches.'],
       ['Is there a daily limit?', 'Only for matches against bots: 5 free matches a day, plus refills. Live matches and duels have no limit. The Ladder has its own two attempts a day.'],
       ['What do I get for inviting friends?', 'A Bronze pack after a friend plays 3 matches and a Silver pack after 10, plus 5% of the fees from their staked games.'],
       ['Where do the real prizes come from?', 'From players, openly: duel and live stakes go to the winner minus a 5% fee, the Cup pays from the pool of those fees, Free Throw pays from half of bundle sales, and the season draw from 30% of Pass sales.'],
@@ -717,9 +717,9 @@ const I18N = {
     modes: [
       ['🏀', 'Матч на районе', 'против команд-ботов', 'Пять мем-команд от Frog Nation до босса All-Stars. 5 бесплатных матчей в день, рефилл добавляет ещё 5. Победы дают Hype, рейтинг, очки сезона и иногда карту.', ['своя колода', '5 бесплатно / день'], 'teams'],
       ['⚡', 'Живой матч', 'PvP в реальном времени', 'Ход за ходом против живого игрока: подбор по рейтингу, открытая комната или приватная по коду. 15 секунд на ход. Три автохода подряд или выход — поражение.', ['своя колода', 'бесплатно или ставка', 'без лимита']],
-      ['🎯', 'Дуэль', 'один корт, лучший счёт', 'Ты и соперник по отдельности играете один и тот же корт против одного бота. Побеждает больший счёт, потом меньше ходов; полная ничья — возврат. 24 ч на принятие, 24 ч на игру.', ['нейтральная колода', 'ставка: Hype · GRAM · USDT', 'комиссия 5%']],
+      ['🎯', 'Дуэль', 'свой корт, лучший счёт', 'Ты и соперник играете каждый свой корт против одного бота. Побеждает больший счёт, потом меньше ходов; полная ничья — возврат. 24 ч на принятие, 24 ч на игру.', ['нейтральная колода', 'ставка: Hype · GRAM · USDT', 'комиссия 5%']],
       ['🪜', 'Daily Ladder', 'один корт на всех', 'Каждый день все игроки получают один и тот же корт. Две попытки (вторая за Hype). Топ-10 дня забирает призы в Hype. Сброс в 00:00 UTC.', ['нейтральная колода', 'призы каждый день']],
-      ['🏆', 'Weekly Cup', 'плей-офф топ-16', '16 лучших недельного топа встречаются в воскресенье в 18:00 UTC. Игра на вылет, 24 ч на раунд. Призы: GRAM из пула комиссий дуэлей, Hype и паки.', ['нейтральная колода', 'по квалификации', 'призы в GRAM']],
+      ['🏆', 'Weekly Cup', 'плей-офф топ-16', '16 лучших недельного топа встречаются в воскресенье в 18:00 UTC. Игра на вылет, 24 ч на раунд, корт у каждого свой, как в дуэли. Призы: GRAM из пула комиссий дуэлей, Hype и паки.', ['нейтральная колода', 'по квалификации', 'призы в GRAM']],
       ['🎓', 'Обучение', 'первый матч', 'Матч с тренером, который показывает броски, комбо и защиту. За прохождение — разовый бонус Hype. Повторить можно в любой момент из профиля.', ['4 хода по сценарию', 'бонус один раз']],
     ],
     rtH: 'Рейтинг', rtT: 'Число твоей силы. Оно стоит рядом с именем, и по нему живой матч подбирает соперника близкого уровня. Меняется только в <b>матчах на районе</b> и <b>живых матчах</b>, одинаково при любом сопернике. Дуэли, Daily Ladder, Weekly Cup и Free Throw его не трогают.',
@@ -762,7 +762,7 @@ const I18N = {
     faq: [
       ['Могу ли я потерять карты в матче?', 'Нет. Корт — временная раскладка. Что бы ни случилось в матче, коллекция и колода остаются прежними. Ставка — всегда валюта, никогда не карты.'],
       ['Можно ли купить победу?', 'Нет. Паки усиливают клатч, а клатч важен только для бросков, которые защита заблокировала полностью, это примерно каждый десятый. Бонус карты ограничен +20%. Это заметное преимущество, но не гарантия победы.'],
-      ['Почему в дуэлях коллекция не важна?', 'Дуэль, Daily Ladder и Weekly Cup — про равные условия: обе стороны играют нейтральной колодой на одном корте. Своя колода играет в матчах с ботами и в живых матчах.'],
+      ['Почему в дуэлях коллекция не важна?', 'Дуэль, Daily Ladder и Weekly Cup — про равные условия: все играют одной нейтральной колодой против одного бота. В дуэли и кубке корт у каждого свой, в лестнице — один на всех. Своя колода играет в матчах с ботами и в живых матчах.'],
       ['Есть ли дневной лимит?', 'Только на матчи с ботами: 5 бесплатных в день плюс рефилл. Живые матчи и дуэли без лимита. У лестницы свои две попытки в день.'],
       ['Что я получу за приглашённых друзей?', 'Bronze-пак, когда друг сыграет 3 матча, и Silver-пак после 10, плюс 5% комиссий с его игр на ставку.'],
       ['Откуда берутся реальные призы?', 'От игроков, и это открыто: ставки дуэлей и живых матчей уходят победителю за вычетом комиссии 5%, кубок платит из пула этих комиссий, Free Throw — из половины продаж пачек, розыгрыш сезона — из 30% продаж Pass.'],
@@ -815,9 +815,9 @@ const I18N = {
     modes: [
       ['🏀', 'Матч на районі', 'проти команд-ботів', "П'ять мем-команд від Frog Nation до боса All-Stars. 5 безкоштовних матчів на день, рефіл додає ще 5. Перемоги дають Hype, рейтинг, очки сезону й іноді карту.", ['своя колода', '5 безкоштовно / день'], 'teams'],
       ['⚡', 'Живий матч', 'PvP у реальному часі', 'Хід за ходом проти живого гравця: підбір за рейтингом, відкрита кімната або приватна за кодом. 15 секунд на хід. Три автоходи поспіль або вихід — поразка.', ['своя колода', 'безкоштовно або ставка', 'без ліміту']],
-      ['🎯', 'Дуель', 'один корт, кращий рахунок', 'Ти й суперник окремо граєте той самий корт проти одного бота. Перемагає більший рахунок, потім менше ходів; повна нічия — повернення. 24 год на прийняття, 24 год на гру.', ['нейтральна колода', 'ставка: Hype · GRAM · USDT', 'комісія 5%']],
+      ['🎯', 'Дуель', 'свій корт, кращий рахунок', 'Ти й суперник граєте кожен свій корт проти одного бота. Перемагає більший рахунок, потім менше ходів; повна нічия — повернення. 24 год на прийняття, 24 год на гру.', ['нейтральна колода', 'ставка: Hype · GRAM · USDT', 'комісія 5%']],
       ['🪜', 'Daily Ladder', 'один корт на всіх', 'Щодня всі гравці отримують той самий корт. Дві спроби (друга за Hype). Топ-10 дня забирає призи в Hype. Скидання о 00:00 UTC.', ['нейтральна колода', 'призи щодня']],
-      ['🏆', 'Weekly Cup', 'плей-оф топ-16', '16 найкращих тижневого топу зустрічаються в неділю о 18:00 UTC. Гра на виліт, 24 год на раунд. Призи: GRAM із пулу комісій дуелей, Hype і паки.', ['нейтральна колода', 'за кваліфікацією', 'призи в GRAM']],
+      ['🏆', 'Weekly Cup', 'плей-оф топ-16', '16 найкращих тижневого топу зустрічаються в неділю о 18:00 UTC. Гра на виліт, 24 год на раунд, корт у кожного свій, як у дуелі. Призи: GRAM із пулу комісій дуелей, Hype і паки.', ['нейтральна колода', 'за кваліфікацією', 'призи в GRAM']],
       ['🎓', 'Навчання', 'перший матч', 'Матч із тренером, який показує кидки, комбо й захист. За проходження — разовий бонус Hype. Повторити можна будь-коли з профілю.', ['4 ходи за сценарієм', 'бонус один раз']],
     ],
     rtH: 'Рейтинг', rtT: 'Число твоєї сили. Воно стоїть поруч з іменем, і за ним живий матч добирає суперника близького рівня. Змінюється лише в <b>матчах на районі</b> та <b>живих матчах</b>, однаково за будь-якого суперника. Дуелі, Daily Ladder, Weekly Cup і Free Throw його не чіпають.',
@@ -860,7 +860,7 @@ const I18N = {
     faq: [
       ['Чи можу я втратити карти в матчі?', 'Ні. Корт — тимчасова розкладка. Хай що станеться в матчі, колекція й колода лишаються тими самими. Ставка — завжди валюта, ніколи не карти.'],
       ['Чи можна купити перемогу?', 'Ні. Паки підсилюють клатч, а клатч важливий лише для кидків, які захист заблокував повністю, це приблизно кожен десятий. Бонус карти обмежено +20%. Це помітна перевага, але не гарантія перемоги.'],
-      ['Чому в дуелях колекція не важлива?', 'Дуель, Daily Ladder і Weekly Cup — про рівні умови: обидві сторони грають нейтральною колодою на одному корті. Своя колода грає в матчах із ботами та в живих матчах.'],
+      ['Чому в дуелях колекція не важлива?', 'Дуель, Daily Ladder і Weekly Cup — про рівні умови: усі грають однією нейтральною колодою проти одного бота. У дуелі й кубку корт у кожного свій, у драбині — один на всіх. Своя колода грає в матчах із ботами та в живих матчах.'],
       ['Чи є денний ліміт?', 'Лише на матчі з ботами: 5 безкоштовних на день плюс рефіл. Живі матчі й дуелі без ліміту. У драбини свої дві спроби на день.'],
       ['Що я отримаю за запрошених друзів?', 'Bronze-пак, коли друг зіграє 3 матчі, і Silver-пак після 10, плюс 5% комісій з його ігор на ставку.'],
       ['Звідки беруться реальні призи?', 'Від гравців, і це відкрито: ставки дуелей і живих матчів ідуть переможцю за вирахуванням комісії 5%, кубок платить із пулу цих комісій, Free Throw — з половини продажів пачок, розіграш сезону — з 30% продажів Pass.'],
